@@ -1,123 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang=\"en\">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Veyn</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta charset=\"UTF-8\" />
+  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />
+  <title>Veyn – Mock v4.3</title>
+  <link href=\"https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap\" rel=\"stylesheet\">
   <style>
     :root{ --bg:#F2EDE6; --accent:#4A5E4A; --tan:#8B7355; --card:#EDE8DF; --tan2:#B5A08A; --brown:#6B5744; --text:#1A1A1A; }
-    *{box-sizing:border-box} body{margin:0;font-family:Plus Jakarta Sans,system-ui;background:var(--bg);color:var(--text)}
-    /* Layout */
+    *{box-sizing:border-box} body{margin:0;font-family:Plus Jakarta Sans, system-ui;background:var(--bg);color:var(--text)}
     .top-header{padding:14px 20px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:40}
-    .brand{font-family:Playfair Display,serif;font-size:26px;color:var(--accent);letter-spacing:1px}
-    .header-actions{display:flex;gap:8px;align-items:center}
-    .settings-btn{border:1px solid #ddd;border-radius:8px;padding:6px 12px;background:#fff;cursor:pointer;font-size:13px}
-    .avatar{width:32px;height:32px;border-radius:50%;background:var(--card)}
-    .layout{display:flex;min-height:calc(100vh - 54px)}
-    .sidebar{width:190px;background:#fff;border-right:1px solid #eee;padding:12px;flex-shrink:0}
-    .sidebar h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--tan);margin:12px 0 8px}
-    .sidebar ul{list-style:none;padding:0;margin:0}
-    .sidebar li{padding:10px 12px;border-radius:6px;cursor:pointer;margin:4px 0;font-size:13px;border:1px solid transparent}
-    .sidebar li:hover{background:#f5f0ea}
-    .sidebar li.active{background:var(--accent);color:#fff;font-weight:600}
-    .content{flex:1;padding:24px;max-width:900px}
-    /* Components */
-    .hero{text-align:center;padding:12px 0 24px}
-    .hero-label{font-size:12px;color:var(--tan);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
-    .hero-total{font-family:Playfair Display,serif;font-size:48px;line-height:1.1}
-    .hero-updated{font-size:12px;color:#999;margin-top:6px}
-    .card{background:#fff;border-radius:16px;box-shadow:0 4px 16px rgba(107,87,68,.06);overflow:hidden;margin-bottom:24px}
-    .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-    .page-title{font-family:Playfair Display,serif;font-size:28px}
-    .tool-bar{display:flex;gap:8px}
-    .btn-icon{width:32px;height:32px;border-radius:6px;background:var(--accent);color:#fff;border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-    .filter-chip{padding:6px 12px;font-size:12px;border:1px solid #ddd;border-radius:99px;cursor:pointer;background:#fff}
-    .filter-chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-    /* Holdings */
-    .holding-row{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid #f0ece6;cursor:pointer;transition:background .15s}
-    .holding-row:hover{background:#faf8f4}
-    .coin-left{display:flex;align-items:center;gap:12px}
-    .icon{width:36px;height:36px;border-radius:10px;background:var(--card);display:flex;align-items:center;justify-content:center;font-weight:700}
-    .name{font-weight:600;font-size:14px}
-    .amount{font-size:12px;color:#888;margin-top:2px}
-    .value{font-weight:600;text-align:right}
-    .chevron{font-size:11px;color:#bbb;margin-left:8px;transition:transform .2s}
-    .chevron.open{transform:rotate(90deg)}
-    /* Sources */
-    .sources{display:none;background:#faf8f4;padding:6px 18px 12px 66px}
-    .sources.open{display:block}
-    .source-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0ece6;font-size:13px}
-    .source-row:last-child{border-bottom:none}
-    .source-meta{display:flex;align-items:center;gap:8px}
-    .badge{font-size:10px;padding:3px 7px;border-radius:99px;font-weight:700}
-    .badge-sc{background:var(--accent);color:#fff}
-    .badge-cu{background:var(--tan2);color:#fff}
-    .type-label{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-left:4px}
-    .source-right{display:flex;align-items:center;gap:12px}
-    .perf{font-size:11px;font-weight:600}
-    .perf.up{color:#2a9d8f} .perf.down{color:#e76f51}
-    .visit{font-size:10px;color:var(--accent);text-decoration:none;border:1px solid var(--accent);padding:2px 6px;border-radius:4px}
-    .visit:hover{background:var(--accent);color:#fff}
-    /* Settings panel */
-    .panel{position:fixed;right:20px;top:56px;width:240px;background:#fff;border:1px solid #ddd;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.12);padding:8px;display:none;z-index:50}
-    .panel.active{display:block}
-    .row{padding:8px 10px;font-size:13px;cursor:pointer;border-bottom:1px solid #f5f0ea}
-    .row:last-child{border-bottom:0}
-    .row:hover{background:#f5f0ea}
-    /* Responsive */
-    @media(max-width:700px){.layout{flex-direction:column}.sidebar{width:auto;border-right:0;border-bottom:1px solid #eee;padding:8px 16px}.sidebar ul{display:flex;gap:8px;overflow-x:auto}.sidebar li{white-space:nowrap;margin:0}}
+    .brand{font-family:Playfair Display, serif;font-size:26px;color:var(--accent)}
+    .avatar{ width:32px; height:32px; border-radius:6px; background:#ddd }
+    .layout{ display:flex; min-height:calc(100vh - 54px); }
+    .sidebar{ width:180px; background:#fff; border-right:1px solid #eee; padding:12px; flex-shrink:0 }
+    .sidebar h3{ font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--tan); margin:8px 0 8px }
+    .sidebar ul{ list-style:none; padding:0; margin:0 }
+    .sidebar li{ padding:8px 10px; border-radius:6px; cursor:pointer; border:1px solid #eee; margin:6px 0; font-size:13px }
+    .sidebar li:hover{ background:#f5f0ea }
+    .sidebar li.active{ background:var(--accent); color:#fff; font-weight:600 }
+    .content{ flex:1; padding:20px; }
+    .hero{ text-align:center; padding:6px 0 18px; }
+    .hero-label{ font-size:12px; color:var(--tan); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px }
+    .hero-total{ font-family:Playfair Display,serif; font-size:48px; line-height:1.1 }
+    .hero-updated{ font-size:12px; color:#999; }
+    .card{ background:#fff; border-radius:14px; box-shadow:0 4px 16px rgba(0,0,0,.06); overflow:hidden; margin-top:8px; }
+    .section{ padding:8px 0; }
+    .hint{ color:#666; font-size:12px; text-align:center; padding:6px 0; }
+    /* Strategy cards */
+    .strategy-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; padding:12px; }
+    .card-strategy{ background:#fff; border:1px solid #eee; border-radius:12px; padding:12px; }
+    .card-strategy h4{ margin:6px 0 6px; font-size:14px; }
+    .card-strategy p{ font-size:12px; color:#555; }
+    .cta{ display:inline-block; padding:8px 12px; border-radius:6px; background:var(--accent); color:#fff; text-decoration:none; font-weight:600; font-size:12px; }
   </style>
 </head>
 <body>
-  <div class="top-header">
-    <div class="brand">Veyn</div>
-    <div class="header-actions">
-      <button class="settings-btn" onclick="togglePanel()">Settings</button>
-      <div class="avatar"></div>
+  <header class=\"top-header\">
+    <div class=\"brand\">Veyn</div>
+    <div class=\"header-actions\">
+      <button class=\"settings\" onclick=\"togglePanel()\">Settings</button>
+      <div class=\"avatar\" aria-label=\"User\"></div>
     </div>
-  </div>
-
-  <div class="layout">
-    <aside class="sidebar">
+  </header>
+  <div class=\"layout\">
+    <aside class=\"sidebar\" aria-label=\"navigation\">
       <h3>Navigate</h3>
-      <ul id="nav">
-        <li class="active" onclick="setView('summary')">Summary</li>
-        <li onclick="setView('portfolio')">Crypto Portfolio</li>
-        <li onclick="setView('strategies')">Strategies</li>
-        <li onclick="setView('performance')">Performance</li>
+      <ul>
+        <li class=\"active\" onclick=\"setView('summary')\">Summary</li>
+        <li onclick=\"setView('portfolio')\">Crypto Portfolio</li>
+        <li onclick=\"setView('strategies')\">Strategies</li>
+        <li onclick=\"setView('performance')\">Performance</li>
       </ul>
     </aside>
-    <main class="content" id="main"></main>
+    <main class=\"content\" id=\"main\"></main>
   </div>
-
-  <div class="panel" id="settingsPanel">
-    <div class="row">View Profile</div>
-    <div class="row">Theme: Light</div>
-    <div class="row">CT Badge: On</div>
-    <div class="row">Help</div>
+  <div class=\"panel\" id=\"settingsPanel\" aria-label=\"settings-panel\">
+    <div class=\"row\">View Profile</div>
+    <div class=\"row\">Theme: Light</div>
+    <div class=\"row\">CT Badge: On</div>
+    <div class=\"row\">Help</div>
   </div>
-
+  <button class=\"plus\" title=\"New Crypto Portfolio\" onclick=\"alert('New portfolio draft created (mock)')\">+</button>
   <script>
-    const data = [
-      {
-        coin: 'Bitcoin', sym:'BTC', icon:'\u20bf', amt:0.5, total:35850,
+    const data4 = [
+      { coin: 'Bitcoin', sym:'BTC', icon:'\u20bf', amt:0.5, total:35850,
         sources: [
           {name:'MetaMask', type:'sc', val:'$12,400', perf:'+2.4%', link:'https://metamask.io'},
           {name:'Phantom', type:'sc', val:'$8,200', perf:'+1.1%', link:'https://phantom.app'},
-          {name:'Coinbase', type:'cu', val:'$15,250', perf:'+0.8%', link:'https://coinbase.com'}
+          {name:'Trust Wallet', type:'sc', val:'$3,100', perf:'+0.8%', link:'https://trustwallet.com'}
         ]
       },
-      {
-        coin: 'Ethereum', sym:'ETH', icon:'\u039e', amt:2.0, total:4200,
+      { coin: 'Ethereum', sym:'ETH', icon:'\u039e', amt:2.0, total:4200,
         sources: [
           {name:'MetaMask', type:'sc', val:'$1,800', perf:'-0.5%', link:'https://metamask.io'},
           {name:'Ledger', type:'sc', val:'$1,200', perf:'-0.2%', link:'https://ledger.com'},
           {name:'Kraken', type:'cu', val:'$1,200', perf:'-0.6%', link:'https://kraken.com'}
         ]
       },
-      {
-        coin: 'Solana', sym:'SOL', icon:'S', amt:150, total:19500,
+      { coin: 'Solana', sym:'SOL', icon:'S', amt:150, total:19500,
         sources: [
           {name:'Phantom', type:'sc', val:'$12,500', perf:'+5.2%', link:'https://phantom.app'},
           {name:'Coinbase', type:'cu', val:'$7,000', perf:'+4.8%', link:'https://coinbase.com'}
@@ -125,79 +85,9 @@
       }
     ];
 
-    function renderHoldings(showPlus=false){
-      const rows = data.map((h,i) => `
-        <div class="holding-group">
-          <div class="holding-row" onclick="toggle(${i})">
-            <div class="coin-left">
-              <div class="icon">${h.icon}</div>
-              <div><div class="name">${h.coin}</div><div class="amount">${h.amt} ${h.sym}</div></div>
-            </div>
-            <div style="display:flex;align-items:center">
-              <div class="value">$${h.total.toLocaleString()}</div>
-              <span class="chevron" id="chev-${i}">&#x25B8;</span>
-            </div>
-          </div>
-          <div class="sources" id="src-${i}">
-            ${h.sources.map(s => `
-              <div class="source-row">
-                <div class="source-meta">
-                  <span class="name">${s.name}</span>
-                  <span class="badge ${s.type==='sc'?'badge-sc':'badge-cu'}">${s.type==='sc'?'Self-Custody':'Custodial'}</span>
-                  <span class="type-label">${s.type==='sc'?'Wallet':'Exchange'}</span>
-                </div>
-                <div class="source-right">
-                  <span class="perf ${s.perf.includes('+')?'up':'down'}">${s.perf}</span>
-                  <span class="value">${s.val}</span>
-                  <a href="${s.link}" target="_blank" class="visit">Visit</a>
-                </div>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      `).join('');
-
-      return `
-        ${showPlus ? `<div class="page-header"><div class="page-title">Crypto Portfolio</div><div class="tool-bar"><button class="btn-icon" title="New Portfolio">+</button></div></div>` : ''}
-        ${showPlus ? `<div class="filter" style="display:flex;gap:8px;margin-bottom:12px;justify-content:flex-end"><span class="filter-chip active">All</span><span class="filter-chip">Wallets</span><span class="filter-chip">Exchanges</span></div>` : ''}
-        <div class="card">${rows}</div>
-      `;
-    }
-
-    function setView(view){
+    function render(){
       const main = document.getElementById('main');
-      document.querySelectorAll('.sidebar li').forEach(li => li.classList.remove('active'));
-      const activeLi = document.querySelector(`.sidebar li[onclick*="${view}"]`);
-      if(activeLi) activeLi.classList.add('active');
-
-      if(view === 'summary'){
-        main.innerHTML = `
-          <div class="hero">
-            <div class="hero-label">Total Balance</div>
-            <div class="hero-total">$59,550.00</div>
-            <div class="hero-updated">Last updated: Just now <span style="font-size:10px;border:1px solid #ccc;border-radius:4px;padding:1px 4px;margin-left:4px">CT</span></div>
-          </div>
-          ${renderHoldings(false)}
-        `;
-      } else if(view === 'portfolio'){
-        main.innerHTML = renderHoldings(true);
-      } else if(view === 'strategies'){
-        main.innerHTML = renderStrategies();
-      } else if(view === 'performance'){
-        main.innerHTML = `<div style="text-align:center;padding:60px 20px;color:#999;font-size:14px">Performance analytics coming soon.</div>`;
-      }
-    }
-
-    function toggle(i){
-      document.getElementById(`src-${i}`).classList.toggle('open');
-      document.getElementById(`chev-${i}`).classList.toggle('open');
-    }
-    function togglePanel(){
-      document.getElementById('settingsPanel').classList.toggle('active');
-    }
-
-    // Init
-    setView('summary');
-  </script>
-</body>
-</html>
+      main.innerHTML = `
+        <section class=\"hero\">\n          <div class=\"hero-label\">Total Balance</div>\n          <div class=\"hero-total\" id=\"totalValue\">$42,000.00</div>\n          <div class=\"hero-updated\">Last updated: Just now</div>\n        </section>\n        <section class=\"card\">` + data4.map((h,i) => `\n          <div class=\"holding-row\" onclick=\"toggle(${i})\">\n            <div class=\"coin-left\">\n              <div class=\"icon\">${h.icon}</div>\n              <div>\n                <div class=\"name\">${h.coin} <span class=\"badge badge-sc\">Self-Custody</span></div>\n                <div class=\"amount\">${h.amt} ${h.sym}</div>\n              </div>\n            </div>\n            <div class=\"source-total\">$${h.total.toLocaleString()} </div>\n          </div>\n          <div class=\"sources\" id=\"src-${i}\">` + h.sources.map(s => `\n            <div class=\"source-row\">\n              <div class=\"source-meta\">\n                <span class=\"name\">${s.name}</span> <span class=\"badge ${s.type==='sc'?'badge-sc':'badge-cu'}\">${s.type==='sc'?'Self-Custody':'Custodial'}</span> <span class=\"type-label\">${s.type==='sc'?'Wallet':'Exchange'}</span> - <span class=\"source-amount\">${s.val}</span> <a href=\"${s.link}\" target=\"_blank\" class=\"visit\">Visit</a>\n            </div>\n          </div>`).join('') + `\n        </div>`).join('') + `\n        </section>`;\n    }\n
+    function toggle(i){\n      document.getElementById('src-' + i).classList.toggle('open');\n    }\n
+    // Init content with 4.2 data\n    render();\n  </script>\n</body>\n</html>
