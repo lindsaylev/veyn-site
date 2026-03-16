@@ -3,196 +3,82 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Veyn — your portfolio, unified</title>
+  <title>Veyn – Mock v4.1</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #F2EDE6;
-      --accent: #4A5E4A;
-      --tan: #8B7355;
-      --card: #EDE8DF;
-      --tan2: #B5A08A;
-      --brown: #6B5744;
-      --text: #1A1A1A;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
-    html, body { height: 100%; font-family: 'Plus Jakarta Sans', system-ui; background: var(--bg); color: var(--text); }
-
-    /* Header */
-    header { padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; max-width: 960px; margin: 0 auto; }
-    .brand { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--accent); letter-spacing: 1px; }
-    .avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--card); }
-
-    /* Container */
-    .container { max-width: 960px; margin: 0 auto; padding: 0 24px 60px; }
-
-    /* Hero */
-    .hero { text-align: center; padding: 24px 0 32px; }
-    .hero-label { font-size: 13px; color: var(--tan); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; }
-    .hero-total { font-family: 'Playfair Display', serif; font-size: 52px; line-height: 1.1; }
-    .hero-updated { font-size: 12px; color: #999; margin-top: 8px; }
-
-    /* Banner */
-    .banner { text-align: center; background: var(--card); color: var(--tan); font-size: 13px; font-weight: 500; padding: 10px; border-radius: 12px; margin-bottom: 24px; display: none; }
-    .banner.visible { display: block; }
-
-    /* Card */
-    .card { background: #fff; border-radius: 20px; box-shadow: 0 4px 20px rgba(107, 87, 68, 0.06); overflow: hidden; }
-
-    /* Holding row */
-    .holding-row { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; cursor: pointer; transition: background 0.15s; border-bottom: 1px solid #f0ece6; }
-    .holding-row:hover { background: #faf8f4; }
-    .holding-row:last-child { border-bottom: none; }
-    .coin-left { display: flex; align-items: center; gap: 14px; }
-    .coin-icon { width: 36px; height: 36px; border-radius: 10px; background: var(--card); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; }
-    .coin-name { font-weight: 600; font-size: 15px; }
-    .coin-amount { font-size: 13px; color: #888; margin-top: 2px; }
-    .coin-value { font-weight: 600; font-size: 15px; text-align: right; }
-    .chevron { font-size: 12px; color: #bbb; margin-left: 8px; transition: transform 0.2s; }
-    .chevron.open { transform: rotate(90deg); }
-
-    /* Badges */
-    .badge { font-size: 10px; padding: 3px 8px; border-radius: 99px; font-weight: 700; letter-spacing: 0.3px; vertical-align: middle; margin-left: 6px; }
-    .badge-sc { background: var(--accent); color: #fff; }
-    .badge-cu { background: var(--tan2); color: #fff; }
-
-    /* Sources (expandable) */
-    .sources { display: none; background: #faf8f4; padding: 0 20px 12px 70px; }
-    .sources.open { display: block; }
-    .source-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0ece6; }
-    .source-row:last-child { border-bottom: none; }
-    .source-name { font-size: 14px; }
-    .source-right { display: flex; align-items: center; gap: 12px; }
-    .source-amount { font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
-    .visit-link { font-size: 11px; color: var(--accent); text-decoration: none; padding: 4px 10px; border: 1px solid var(--accent); border-radius: 8px; transition: all 0.15s; }
-    .visit-link:hover { background: var(--accent); color: #fff; }
-
-    /* Refresh FAB */
-    .refresh { position: fixed; bottom: 28px; right: 28px; width: 48px; height: 48px; background: var(--text); color: #fff; border: none; border-radius: 50%; font-size: 20px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.2s; }
-    .refresh:active { transform: scale(0.92); }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      .hero-total { font-size: 40px; }
-      .sources { padding-left: 52px; }
-    }
+    :root{ --bg:#F2EDE6; --accent:#4A5E4A; --tan:#8B7355; --card:#EDE8DF; --tan2:#B5A08A; --brown:#6B5744; --text:#1A1A1A; }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;font-family:Plus Jakarta Sans, system-ui;background:var(--bg);color:var(--text)}
+    header{padding:14px 20px; display:flex; justify-content:space-between; align-items:center; max-width:1100px; margin:0 auto}
+    .brand{font-family:Playfair Display, serif; font-size:28px; color:var(--accent)}
+    .avatar{ width:32px; height:32px; border-radius:6px; background:#ddd }
+    .layout{ display:flex; min-height:100vh; }
+    .sidebar{ width:240px; background:#fff; border-right:1px solid #eee; padding:16px; box-shadow:0 4px 12px rgba(0,0,0,.04) }
+    .sidebar h3{ font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--tan); margin:8px 0 12px }
+    .sidebar ul{ list-style:none; padding:0; margin:0; }
+    .sidebar li{ padding:10px 6px; border-radius:6px; cursor:pointer; }
+    .sidebar li:hover{ background:#f5f0ea }
+    .content{ flex:1; padding:20px; }
+    .header-actions{ display:flex; gap:8px; align-items:center }
+    .menu{ border:1px solid #ddd; border-radius:8px; padding:6px 10px; background:#fff; cursor:pointer }
+    .panel{ position: fixed; right: 20px; top: 64px; width: 260px; background:#fff; border:1px solid #ddd; border-radius:10px; box-shadow:0 8px 20px rgba(0,0,0,.15); padding:12px; display:none; z-index: 50 }
+    .panel.active{ display:block; }
+    .panel .row{ padding:6px 0; border-bottom:1px solid #eee; font-size:13px }
+    .panel .row:last-child{ border-bottom:0 }
+    .section{ margin-bottom:18px }
+    .total{ font-family:Playfair Display, serif; font-size:46px; text-align:center; margin:16px 0 }
+    .badge{ padding:4px 8px; border-radius:999px; font-weight:700; font-size:11px; }
+    .badge-sc{ background:var(--accent); color:#fff }
+    .badge-cu{ background:var(--tan); color:#fff }
+    .sources{ display:none; padding-left:42px; padding-bottom:8px; }
+    .source{ display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid #eee }
+    .source a{ font-size:12px; color:var(--accent); text-decoration:none }
+    .visit{ font-size:12px }
+    @media (max-width: 900px){ .layout{ flex-direction:column; } .sidebar{ width:auto; border-right:0; } .panel{ right:10px; left:10px; width:auto; } }
   </style>
 </head>
 <body>
   <header>
     <div class="brand">Veyn</div>
-    <div class="avatar"></div>
+    <div class="header-actions"><button class="menu" onclick="togglePanel()">Settings</button><div class="avatar" aria-label="User"></div></div>
   </header>
-
-  <div class="container">
-    <div id="banner" class="banner">Some prices may be delayed</div>
-
-    <section class="hero">
-      <div class="hero-label">Total Balance</div>
-      <div class="hero-total" id="total">$42,000.00</div>
-      <div class="hero-updated" id="updated">Last updated: Just now</div>
-    </section>
-
-    <section class="card" id="holdings"></section>
-  </div>
-
-  <button class="refresh" onclick="simulateRefresh()" title="Refresh prices">&#x21bb;</button>
-
-  <script>
-    const holdings = [
-      {
-        coin: 'Bitcoin', symbol: 'BTC', icon: '₿', amount: 0.5, totalUSD: 35850,
-        sources: [
-          { name: 'MetaMask', type: 'sc', amount: '$12,400', url: 'https://metamask.io' },
-          { name: 'Phantom', type: 'sc', amount: '$8,200', url: 'https://phantom.app' },
-          { name: 'Trust Wallet', type: 'sc', amount: '$3,100', url: 'https://trustwallet.com' },
-          { name: 'Ledger Live', type: 'sc', amount: '$6,750', url: 'https://www.ledger.com' },
-          { name: 'Coinbase Wallet', type: 'sc', amount: '$1,400', url: 'https://wallet.coinbase.com' },
-          { name: 'Coinbase', type: 'cu', amount: '$2,500', url: 'https://www.coinbase.com' },
-          { name: 'Binance', type: 'cu', amount: '$1,200', url: 'https://www.binance.com' },
-          { name: 'Kraken', type: 'cu', amount: '$300', url: 'https://www.kraken.com' },
-        ]
-      },
-      {
-        coin: 'Ethereum', symbol: 'ETH', icon: 'Ξ', amount: 2.0, totalUSD: 4200,
-        sources: [
-          { name: 'MetaMask', type: 'sc', amount: '$1,800', url: 'https://metamask.io' },
-          { name: 'Phantom', type: 'sc', amount: '$400', url: 'https://phantom.app' },
-          { name: 'Trust Wallet', type: 'sc', amount: '$200', url: 'https://trustwallet.com' },
-          { name: 'Ledger Live', type: 'sc', amount: '$600', url: 'https://www.ledger.com' },
-          { name: 'Coinbase Wallet', type: 'sc', amount: '$100', url: 'https://wallet.coinbase.com' },
-          { name: 'Coinbase', type: 'cu', amount: '$800', url: 'https://www.coinbase.com' },
-          { name: 'Binance', type: 'cu', amount: '$200', url: 'https://www.binance.com' },
-          { name: 'Kraken', type: 'cu', amount: '$100', url: 'https://www.kraken.com' },
-        ]
-      },
-      {
-        coin: 'Solana', symbol: 'SOL', icon: 'S', amount: 15, totalUSD: 1950,
-        sources: [
-          { name: 'Phantom', type: 'sc', amount: '$900', url: 'https://phantom.app' },
-          { name: 'MetaMask', type: 'sc', amount: '$250', url: 'https://metamask.io' },
-          { name: 'Trust Wallet', type: 'sc', amount: '$150', url: 'https://trustwallet.com' },
-          { name: 'Ledger Live', type: 'sc', amount: '$200', url: 'https://www.ledger.com' },
-          { name: 'Coinbase Wallet', type: 'sc', amount: '$50', url: 'https://wallet.coinbase.com' },
-          { name: 'Coinbase', type: 'cu', amount: '$250', url: 'https://www.coinbase.com' },
-          { name: 'Binance', type: 'cu', amount: '$100', url: 'https://www.binance.com' },
-          { name: 'Kraken', type: 'cu', amount: '$50', url: 'https://www.kraken.com' },
-        ]
-      }
-    ];
-
-    function render() {
-      const el = document.getElementById('holdings');
-      el.innerHTML = holdings.map((h, i) => `
-        <div>
-          <div class="holding-row" onclick="toggle(${i})">
-            <div class="coin-left">
-              <div class="coin-icon">${h.icon}</div>
-              <div>
-                <div class="coin-name">${h.coin} <span class="badge badge-sc">Self-Custody</span></div>
-                <div class="coin-amount">${h.amount} ${h.symbol}</div>
-              </div>
-            </div>
-            <div style="display:flex;align-items:center">
-              <span class="coin-value">$${h.totalUSD.toLocaleString()}</span>
-              <span class="chevron" id="chev-${i}">&#x25B8;</span>
-            </div>
+  <div class="layout">
+    <aside class="sidebar" aria-label="navigation">
+      <h3>Navigate</h3>
+      <ul>
+        <li>Summary</li>
+        <li>Crypto Portfolio</li>
+        <li>Strategies</li>
+        <li>Performance</li>
+      </ul>
+    </aside>
+    <main class="content">
+      <section class="hero" aria-label="summary">
+        <div class="total" id="totalValue">$42,000.00</div>
+        <div class="updated" id="lastUpdated">Last updated: Just now</div>
+      </section>
+      <section class="card" aria-label="holdings">
+        <div class="holding-row" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #eee;">
+          <div style="display:flex;gap:8px;align-items:center">
+            <div class="icon" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:6px;background:#f0f0f0">₿</div>
+            <div>Bitcoin <span class="badge badge-sc">Summary</span></div>
           </div>
-          <div class="sources" id="src-${i}">
-            ${h.sources.map(s => `
-              <div class="source-row">
-                <div class="source-name">${s.name} <span class="badge ${s.type === 'sc' ? 'badge-sc' : 'badge-cu'}">${s.type === 'sc' ? 'Self-Custody' : 'Custodial'}</span></div>
-                <div class="source-right">
-                  <span class="source-amount">${s.amount}</span>
-                  <a class="visit-link" href="${s.url}" target="_blank">Visit</a>
-                </div>
-              </div>
-            `).join('')}
-          </div>
+          <div class="source-total">$35,850</div>
         </div>
-      `).join('');
-    }
-
-    function toggle(i) {
-      const src = document.getElementById('src-' + i);
-      const chev = document.getElementById('chev-' + i);
-      const isOpen = src.classList.contains('open');
-      src.classList.toggle('open');
-      chev.classList.toggle('open');
-    }
-
-    function simulateRefresh() {
-      const banner = document.getElementById('banner');
-      const isVis = banner.classList.contains('visible');
-      if (isVis) {
-        banner.classList.remove('visible');
-        document.getElementById('updated').textContent = 'Last updated: Just now';
-      } else {
-        banner.classList.add('visible');
-        document.getElementById('updated').textContent = 'Last updated: 5 mins ago';
-      }
-    }
-
+      </section>
+    </main>
+  </div>
+  <div class="panel" id="settingsPanel" aria-label="settings-panel">
+    <div class="row">View/Edit Profile</div>
+    <div class="row">Theme: Light/Dark</div>
+    <div class="row">CT Badge: On</div>
+    <div class="row">About / Help</div>
+  </div>
+  <button class="refresh" onclick="simulateRefresh()" title="Refresh prices">&#x21bb;</button>
+  <script>
+    function toggleOpen(el){ const s = el.nextElementSibling; if (s) s.style.display = s.style.display === 'block' ? 'none' : 'block'; }
+    function togglePanel(){ const p = document.getElementById('settingsPanel'); p.classList.toggle('active'); }
+    function render(){ /* placeholder */ }
     render();
   </script>
 </body>
