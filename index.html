@@ -181,8 +181,10 @@
         `;
       } else if(view === 'portfolio'){
         main.innerHTML = renderHoldings(true);
-      } else {
-        main.innerHTML = `<div style="text-align:center;padding:40px;color:#999;font-size:14px">Placeholder for ${view}</div>`;
+      } else if(view === 'strategies'){
+        main.innerHTML = renderStrategies();
+      } else if(view === 'performance'){
+        main.innerHTML = `<div style="text-align:center;padding:60px 20px;color:#999;font-size:14px">Performance analytics coming soon.</div>`;
       }
     }
 
