@@ -3,102 +3,199 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Veyn – Mock v4.2</title>
+  <title>Veyn</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root{ --bg:#F2EDE6; --accent:#4A5E4A; --tan:#8B7355; --card:#EDE8DF; --tan2:#B5A08A; --brown:#6B5744; --text:#1A1A1A; }
-    *{box-sizing:border-box}
-    html,body{margin:0;height:100%;font-family:Plus Jakarta Sans, system-ui;background:var(--bg);color:var(--text)}
-    /* Header */
-    .top-header{padding:14px 20px; display:flex; justify-content:space-between; align-items:center; background:#fff; border-bottom:1px solid #eee; position:sticky; top:0; z-index:40}
-    .brand{font-family:Playfair Display, serif; font-size:26px; color:var(--accent)}
-    .avatar{ width:32px; height:32px; border-radius:6px; background:#ddd }
+    *{box-sizing:border-box} body{margin:0;font-family:Plus Jakarta Sans,system-ui;background:var(--bg);color:var(--text)}
     /* Layout */
-    .layout{ display:flex; min-height: calc(100vh - 54px); }
-    .sidebar{ width: 190px; background:#fff; border-right:1px solid #eee; padding:12px; box-shadow:0 4px 12px rgba(0,0,0,.04); }
-    .sidebar h3{ font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--tan); margin:8px 0 12px }
-    .sidebar ul{ list-style:none; padding:0; margin:0 }
-    .sidebar li{ padding:8px 10px; border-radius:6px; border:1px solid #eee; margin:6px 0; cursor:pointer; }
-    .sidebar li.active{ background:var(--accent); color:#fff; }
-    .content{ flex:1; padding:20px; }
+    .top-header{padding:14px 20px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:40}
+    .brand{font-family:Playfair Display,serif;font-size:26px;color:var(--accent);letter-spacing:1px}
+    .header-actions{display:flex;gap:8px;align-items:center}
+    .settings-btn{border:1px solid #ddd;border-radius:8px;padding:6px 12px;background:#fff;cursor:pointer;font-size:13px}
+    .avatar{width:32px;height:32px;border-radius:50%;background:var(--card)}
+    .layout{display:flex;min-height:calc(100vh - 54px)}
+    .sidebar{width:190px;background:#fff;border-right:1px solid #eee;padding:12px;flex-shrink:0}
+    .sidebar h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--tan);margin:12px 0 8px}
+    .sidebar ul{list-style:none;padding:0;margin:0}
+    .sidebar li{padding:10px 12px;border-radius:6px;cursor:pointer;margin:4px 0;font-size:13px;border:1px solid transparent}
+    .sidebar li:hover{background:#f5f0ea}
+    .sidebar li.active{background:var(--accent);color:#fff;font-weight:600}
+    .content{flex:1;padding:24px;max-width:900px}
+    /* Components */
+    .hero{text-align:center;padding:12px 0 24px}
+    .hero-label{font-size:12px;color:var(--tan);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+    .hero-total{font-family:Playfair Display,serif;font-size:48px;line-height:1.1}
+    .hero-updated{font-size:12px;color:#999;margin-top:6px}
+    .card{background:#fff;border-radius:16px;box-shadow:0 4px 16px rgba(107,87,68,.06);overflow:hidden;margin-bottom:24px}
+    .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+    .page-title{font-family:Playfair Display,serif;font-size:28px}
+    .tool-bar{display:flex;gap:8px}
+    .btn-icon{width:32px;height:32px;border-radius:6px;background:var(--accent);color:#fff;border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+    .filter-chip{padding:6px 12px;font-size:12px;border:1px solid #ddd;border-radius:99px;cursor:pointer;background:#fff}
+    .filter-chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+    /* Holdings */
+    .holding-row{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid #f0ece6;cursor:pointer;transition:background .15s}
+    .holding-row:hover{background:#faf8f4}
+    .coin-left{display:flex;align-items:center;gap:12px}
+    .icon{width:36px;height:36px;border-radius:10px;background:var(--card);display:flex;align-items:center;justify-content:center;font-weight:700}
+    .name{font-weight:600;font-size:14px}
+    .amount{font-size:12px;color:#888;margin-top:2px}
+    .value{font-weight:600;text-align:right}
+    .chevron{font-size:11px;color:#bbb;margin-left:8px;transition:transform .2s}
+    .chevron.open{transform:rotate(90deg)}
+    /* Sources */
+    .sources{display:none;background:#faf8f4;padding:6px 18px 12px 66px}
+    .sources.open{display:block}
+    .source-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0ece6;font-size:13px}
+    .source-row:last-child{border-bottom:none}
+    .source-meta{display:flex;align-items:center;gap:8px}
+    .badge{font-size:10px;padding:3px 7px;border-radius:99px;font-weight:700}
+    .badge-sc{background:var(--accent);color:#fff}
+    .badge-cu{background:var(--tan2);color:#fff}
+    .type-label{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-left:4px}
+    .source-right{display:flex;align-items:center;gap:12px}
+    .perf{font-size:11px;font-weight:600}
+    .perf.up{color:#2a9d8f} .perf.down{color:#e76f51}
+    .visit{font-size:10px;color:var(--accent);text-decoration:none;border:1px solid var(--accent);padding:2px 6px;border-radius:4px}
+    .visit:hover{background:var(--accent);color:#fff}
     /* Settings panel */
-    .panel{ position: fixed; right: 20px; top: 64px; width: 240px; background:#fff; border:1px solid #ddd; border-radius:10px; box-shadow:0 8px 20px rgba(0,0,0,.15); padding:10px; display:none; z-index: 50 }
-    .panel.active{ display:block; }
-    .panel .row{ padding:8px 6px; border-bottom:1px solid #eee; font-size:13px }
-    .panel .row:last-child{ border-bottom:0 }
-    /* Hero / portfolio */
-    .hero{ text-align:center; padding:8px 0 16px; }
-    .hero-label{ font-size:12px; color:var(--tan); text-transform:uppercase; letter-spacing:1px; }
-    .hero-total{ font-family:Playfair Display, serif; font-size:46px; margin:6px 0; }
-    .hero-updated{ font-size:12px; color:#999; }
-    .card{ background:#fff; border-radius:14px; box-shadow:0 4px 16px rgba(0,0,0,.06); overflow:hidden; margin-top:8px; }
-    .holding{ display:flex; flex-direction:column; }
-    .holding-row{ display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-top:1px solid #eee; cursor:default; }
-    .coin{ display:flex; align-items:center; gap:10px; }
-    .icon{ width:30px; height:30px; border-radius:8px; background:#f0f0f0; display:flex; align-items:center; justify-content:center; font-weight:700 }
-    .name{ font-weight:600; }
-    .badge{ font-size:11px; padding:4px 8px; border-radius:999px; font-weight:700; margin-left:6px }
-    .badge.sc{ background:var(--accent); color:#fff }
-    .badge.cu{ background:var(--tan); color:#fff }
-    .details{ padding:0 16px 12px; }
-    .source{ display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid #eee; }
-    .source:last-child{ border-bottom:0 }
-    .source a{ color:var(--accent); text-decoration:none }
-    .source .pct{ font-weight:600; color:#0a0; }
-    .filter{ display:flex; justify-content:flex-end; gap:8px; padding:6px 0 12px; }
-    .chip{ padding:6px 12px; border-radius:999px; border:1px solid #ddd; font-size:12px; cursor:pointer; }
-    .chip.active{ background:var(--accent); color:#fff; }
-    .plus{ position: fixed; right: 28px; top: 120px; width: 28px; height: 28px; border-radius:6px; background:var(--accent); color:#fff; font-weight:700; font-size:20px; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,.15); }
+    .panel{position:fixed;right:20px;top:56px;width:240px;background:#fff;border:1px solid #ddd;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.12);padding:8px;display:none;z-index:50}
+    .panel.active{display:block}
+    .row{padding:8px 10px;font-size:13px;cursor:pointer;border-bottom:1px solid #f5f0ea}
+    .row:last-child{border-bottom:0}
+    .row:hover{background:#f5f0ea}
+    /* Responsive */
+    @media(max-width:700px){.layout{flex-direction:column}.sidebar{width:auto;border-right:0;border-bottom:1px solid #eee;padding:8px 16px}.sidebar ul{display:flex;gap:8px;overflow-x:auto}.sidebar li{white-space:nowrap;margin:0}}
   </style>
 </head>
 <body>
-  <header class="top-header">
+  <div class="top-header">
     <div class="brand">Veyn</div>
     <div class="header-actions">
-      <button class="menu" onclick="togglePanel()">Settings</button>
-      <div class="avatar" aria-label="User"></div>
+      <button class="settings-btn" onclick="togglePanel()">Settings</button>
+      <div class="avatar"></div>
     </div>
-  </header>
+  </div>
+
   <div class="layout">
-    <aside class="sidebar" aria-label="navigation">
+    <aside class="sidebar">
       <h3>Navigate</h3>
-      <ul>
-        <li class="active">Summary</li>
-        <li>Crypto Portfolio</li>
-        <li>Strategies</li>
-        <li>Performance</li>
+      <ul id="nav">
+        <li class="active" onclick="setView('summary')">Summary</li>
+        <li onclick="setView('portfolio')">Crypto Portfolio</li>
+        <li onclick="setView('strategies')">Strategies</li>
+        <li onclick="setView('performance')">Performance</li>
       </ul>
     </aside>
-    <main class="content">
-      <section class="hero" aria-label="summary">
-        <div class="hero-label">Total Balance</div>
-        <div class="hero-total" id="totalValue">$42,000.00</div>
-        <div class="hero-updated" id="updated">Last updated: Just now</div>
-      </section>
-      <section class="card" aria-label="holdings">
-        <div class="holding-row" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #eee;">
-          <div style="display:flex;gap:8px;align-items:center">
-            <div class="icon" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:6px;background:#f0f0f0">₿</div>
-            <div>Bitcoin <span class="badge badge-sc">Summary</span></div>
-          </div>
-          <div class="source-total">$35,850</div>
-        </div>
-      </section>
-    </main>
+    <main class="content" id="main"></main>
   </div>
-  <div class="panel" id="settingsPanel" aria-label="settings-panel">
-    <div class="row">View / Edit Profile</div>
-    <div class="row">Theme: Light / Dark</div>
+
+  <div class="panel" id="settingsPanel">
+    <div class="row">View Profile</div>
+    <div class="row">Theme: Light</div>
     <div class="row">CT Badge: On</div>
-    <div class="row">About / Help</div>
+    <div class="row">Help</div>
   </div>
-  <button class="plus" title="New Crypto Portfolio" onclick="alert('New portfolio draft created (mock)')">+</button>
+
   <script>
-    function toggleOpen(el){ const s = el.nextElementSibling; if (s) s.style.display = s.style.display === 'block' ? 'none' : 'block'; }
-    function togglePanel(){ const p = document.getElementById('settingsPanel'); p.classList.toggle('active'); }
-    function showPage(page){ /* stub for now */ }
-    // Initialize content
-    document.getElementById('totalValue').textContent = '$42,000.00';
+    const data = [
+      {
+        coin: 'Bitcoin', sym:'BTC', icon:'\u20bf', amt:0.5, total:35850,
+        sources: [
+          {name:'MetaMask', type:'sc', val:'$12,400', perf:'+2.4%', link:'https://metamask.io'},
+          {name:'Phantom', type:'sc', val:'$8,200', perf:'+1.1%', link:'https://phantom.app'},
+          {name:'Coinbase', type:'cu', val:'$15,250', perf:'+0.8%', link:'https://coinbase.com'}
+        ]
+      },
+      {
+        coin: 'Ethereum', sym:'ETH', icon:'\u039e', amt:2.0, total:4200,
+        sources: [
+          {name:'MetaMask', type:'sc', val:'$1,800', perf:'-0.5%', link:'https://metamask.io'},
+          {name:'Ledger', type:'sc', val:'$1,200', perf:'-0.2%', link:'https://ledger.com'},
+          {name:'Kraken', type:'cu', val:'$1,200', perf:'-0.6%', link:'https://kraken.com'}
+        ]
+      },
+      {
+        coin: 'Solana', sym:'SOL', icon:'S', amt:150, total:19500,
+        sources: [
+          {name:'Phantom', type:'sc', val:'$12,500', perf:'+5.2%', link:'https://phantom.app'},
+          {name:'Coinbase', type:'cu', val:'$7,000', perf:'+4.8%', link:'https://coinbase.com'}
+        ]
+      }
+    ];
+
+    function renderHoldings(showPlus=false){
+      const rows = data.map((h,i) => `
+        <div class="holding-group">
+          <div class="holding-row" onclick="toggle(${i})">
+            <div class="coin-left">
+              <div class="icon">${h.icon}</div>
+              <div><div class="name">${h.coin}</div><div class="amount">${h.amt} ${h.sym}</div></div>
+            </div>
+            <div style="display:flex;align-items:center">
+              <div class="value">$${h.total.toLocaleString()}</div>
+              <span class="chevron" id="chev-${i}">&#x25B8;</span>
+            </div>
+          </div>
+          <div class="sources" id="src-${i}">
+            ${h.sources.map(s => `
+              <div class="source-row">
+                <div class="source-meta">
+                  <span class="name">${s.name}</span>
+                  <span class="badge ${s.type==='sc'?'badge-sc':'badge-cu'}">${s.type==='sc'?'Self-Custody':'Custodial'}</span>
+                  <span class="type-label">${s.type==='sc'?'Wallet':'Exchange'}</span>
+                </div>
+                <div class="source-right">
+                  <span class="perf ${s.perf.includes('+')?'up':'down'}">${s.perf}</span>
+                  <span class="value">${s.val}</span>
+                  <a href="${s.link}" target="_blank" class="visit">Visit</a>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+
+      return `
+        ${showPlus ? `<div class="page-header"><div class="page-title">Crypto Portfolio</div><div class="tool-bar"><button class="btn-icon" title="New Portfolio">+</button></div></div>` : ''}
+        ${showPlus ? `<div class="filter" style="display:flex;gap:8px;margin-bottom:12px;justify-content:flex-end"><span class="filter-chip active">All</span><span class="filter-chip">Wallets</span><span class="filter-chip">Exchanges</span></div>` : ''}
+        <div class="card">${rows}</div>
+      `;
+    }
+
+    function setView(view){
+      const main = document.getElementById('main');
+      document.querySelectorAll('.sidebar li').forEach(li => li.classList.remove('active'));
+      const activeLi = document.querySelector(`.sidebar li[onclick*="${view}"]`);
+      if(activeLi) activeLi.classList.add('active');
+
+      if(view === 'summary'){
+        main.innerHTML = `
+          <div class="hero">
+            <div class="hero-label">Total Balance</div>
+            <div class="hero-total">$59,550.00</div>
+            <div class="hero-updated">Last updated: Just now <span style="font-size:10px;border:1px solid #ccc;border-radius:4px;padding:1px 4px;margin-left:4px">CT</span></div>
+          </div>
+          ${renderHoldings(false)}
+        `;
+      } else if(view === 'portfolio'){
+        main.innerHTML = renderHoldings(true);
+      } else {
+        main.innerHTML = `<div style="text-align:center;padding:40px;color:#999;font-size:14px">Placeholder for ${view}</div>`;
+      }
+    }
+
+    function toggle(i){
+      document.getElementById(`src-${i}`).classList.toggle('open');
+      document.getElementById(`chev-${i}`).classList.toggle('open');
+    }
+    function togglePanel(){
+      document.getElementById('settingsPanel').classList.toggle('active');
+    }
+
+    // Init
+    setView('summary');
   </script>
 </body>
 </html>
