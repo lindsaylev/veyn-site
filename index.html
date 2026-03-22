@@ -8,7 +8,6 @@
   <style>
     :root{ --bg:#F2EDE6; --accent:#4A5E4A; --tan:#8B7355; --card:#EDE8DF; --tan2:#B5A08A; --brown:#6B5744; --text:#1A1A1A; }
     *{box-sizing:border-box} body{margin:0;font-family:Plus Jakarta Sans,system-ui;background:var(--bg);color:var(--text)}
-    /* Layout */
     .top-header{padding:14px 20px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:40}
     .brand{font-family:Playfair Display,serif;font-size:26px;color:var(--accent);letter-spacing:1px}
     .header-actions{display:flex;gap:8px;align-items:center}
@@ -22,7 +21,6 @@
     .sidebar li:hover{background:#f5f0ea}
     .sidebar li.active{background:var(--accent);color:#fff;font-weight:600}
     .content{flex:1;padding:24px;max-width:900px}
-    /* Components */
     .hero{text-align:center;padding:12px 0 24px}
     .hero-label{font-size:12px;color:var(--tan);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
     .hero-total{font-family:Playfair Display,serif;font-size:48px;line-height:1.1}
@@ -34,7 +32,6 @@
     .btn-icon{width:32px;height:32px;border-radius:6px;background:var(--accent);color:#fff;border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
     .filter-chip{padding:6px 12px;font-size:12px;border:1px solid #ddd;border-radius:99px;cursor:pointer;background:#fff}
     .filter-chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-    /* Holdings */
     .holding-row{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid #f0ece6;cursor:pointer;transition:background .15s}
     .holding-row:hover{background:#faf8f4}
     .coin-left{display:flex;align-items:center;gap:12px}
@@ -44,7 +41,6 @@
     .value{font-weight:600;text-align:right}
     .chevron{font-size:11px;color:#bbb;margin-left:8px;transition:transform .2s}
     .chevron.open{transform:rotate(90deg)}
-    /* Sources */
     .sources{display:none;background:#faf8f4;padding:6px 18px 12px 66px}
     .sources.open{display:block}
     .source-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0ece6;font-size:13px}
@@ -59,13 +55,30 @@
     .perf.up{color:#2a9d8f} .perf.down{color:#e76f51}
     .visit{font-size:10px;color:var(--accent);text-decoration:none;border:1px solid var(--accent);padding:2px 6px;border-radius:4px}
     .visit:hover{background:var(--accent);color:#fff}
-    /* Settings panel */
     .panel{position:fixed;right:20px;top:56px;width:240px;background:#fff;border:1px solid #ddd;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.12);padding:8px;display:none;z-index:50}
     .panel.active{display:block}
     .row{padding:8px 10px;font-size:13px;cursor:pointer;border-bottom:1px solid #f5f0ea}
     .row:last-child{border-bottom:0}
     .row:hover{background:#f5f0ea}
-    /* Responsive */
+    .strategy-card{background:#fff;border-radius:16px;padding:20px 24px;cursor:pointer;border:2px solid transparent;transition:all .2s;box-shadow:0 4px 16px rgba(107,87,68,.06)}
+    .strategy-card:hover{border-color:var(--accent)}
+    .strategy-card.selected{border-color:var(--accent);background:#f7f9f7}
+    .risk-badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+    .risk-low{background:#e8f0e8;color:#4A5E4A}
+    .risk-mid{background:#f0ece0;color:#8B7355}
+    .risk-high{background:#f5e8e0;color:#9B4E2F}
+    .strategy-title{font-family:Playfair Display,serif;font-size:20px;margin:0 0 4px}
+    .strategy-sub{font-size:12px;color:var(--tan);margin-bottom:10px;font-weight:500}
+    .strategy-desc{font-size:13px;color:#666;line-height:1.6}
+    .opp-section{background:#fff;border-radius:16px;padding:20px 24px;box-shadow:0 4px 16px rgba(107,87,68,.06)}
+    .opp-title{font-family:Playfair Display,serif;font-size:20px;margin-bottom:4px}
+    .opp-sub{font-size:13px;color:#888;margin-bottom:16px}
+    .opp-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #f0ece6;font-size:13px}
+    .opp-row:last-child{border-bottom:none}
+    .signal{font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;white-space:nowrap}
+    .sig-good{background:#e8f5e9;color:#2e7d32}
+    .sig-warn{background:#fff3e0;color:#e65100}
+    .sig-action{background:#fce4ec;color:#c62828}
     @media(max-width:700px){.layout{flex-direction:column}.sidebar{width:auto;border-right:0;border-bottom:1px solid #eee;padding:8px 16px}.sidebar ul{display:flex;gap:8px;overflow-x:auto}.sidebar li{white-space:nowrap;margin:0}}
   </style>
 </head>
@@ -77,7 +90,6 @@
       <div class="avatar"></div>
     </div>
   </div>
-
   <div class="layout">
     <aside class="sidebar">
       <h3>Navigate</h3>
@@ -90,111 +102,198 @@
     </aside>
     <main class="content" id="main"></main>
   </div>
-
   <div class="panel" id="settingsPanel">
     <div class="row">View Profile</div>
     <div class="row">Theme: Light</div>
     <div class="row">CT Badge: On</div>
     <div class="row">Help</div>
   </div>
-
   <script>
-    const data = [
+    var data = [
+      { coin:'Bitcoin', sym:'BTC', icon:'\u20bf', amt:0.5, total:35850, sources:[
+        {name:'MetaMask',type:'sc',val:'$12,400',perf:'+2.4%',link:'https://metamask.io'},
+        {name:'Phantom',type:'sc',val:'$8,200',perf:'+1.1%',link:'https://phantom.app'},
+        {name:'Coinbase',type:'cu',val:'$15,250',perf:'+0.8%',link:'https://coinbase.com'}
+      ]},
+      { coin:'Ethereum', sym:'ETH', icon:'\u039e', amt:2.0, total:4200, sources:[
+        {name:'MetaMask',type:'sc',val:'$1,800',perf:'-0.5%',link:'https://metamask.io'},
+        {name:'Ledger',type:'sc',val:'$1,200',perf:'-0.2%',link:'https://ledger.com'},
+        {name:'Kraken',type:'cu',val:'$1,200',perf:'-0.6%',link:'https://kraken.com'}
+      ]},
+      { coin:'Solana', sym:'SOL', icon:'S', amt:150, total:19500, sources:[
+        {name:'Phantom',type:'sc',val:'$12,500',perf:'+5.2%',link:'https://phantom.app'},
+        {name:'Coinbase',type:'cu',val:'$7,000',perf:'+4.8%',link:'https://coinbase.com'}
+      ]}
+    ];
+
+    var totalPortfolio = 0;
+    for (var i=0; i<data.length; i++) { totalPortfolio += data[i].total; }
+
+    var strategies = [
       {
-        coin: 'Bitcoin', sym:'BTC', icon:'\u20bf', amt:0.5, total:35850,
-        sources: [
-          {name:'MetaMask', type:'sc', val:'$12,400', perf:'+2.4%', link:'https://metamask.io'},
-          {name:'Phantom', type:'sc', val:'$8,200', perf:'+1.1%', link:'https://phantom.app'},
-          {name:'Coinbase', type:'cu', val:'$15,250', perf:'+0.8%', link:'https://coinbase.com'}
+        id:'conservative', riskLabel:'Low Risk', riskClass:'risk-low',
+        title:'Conservative', sub:'Capital Preservation',
+        desc:'Prioritizes stability and downside protection. Heavy allocation to Bitcoin and Ethereum, the most established and liquid assets in crypto. A stablecoin buffer shields against volatility. Best for investors who want crypto exposure with reduced drawdown risk.',
+        targets:[
+          {asset:'Bitcoin (BTC)', target:'55-65%', sigFn: function(p){ return p>=55&&p<=65?'good':'warn'; }, noteFn: function(p){ return p>=55&&p<=65?'Well positioned as your core holding':'Adjust toward a 60% target'; }},
+          {asset:'Ethereum (ETH)', target:'15-25%', sigFn: function(p){ return p>=15&&p<=25?'good':'warn'; }, noteFn: function(p){ return p<15?'Underweight - increasing ETH strengthens your stable base':'On target'; }},
+          {asset:'Solana (SOL)', target:'Under 10%', sigFn: function(p){ return p>10?'action':'good'; }, noteFn: function(p){ return p>10?'Overweight for this strategy - consider trimming':'On target'; }},
+          {asset:'Stablecoins', target:'10-20%', pct:0, sigFn: function(){ return 'action'; }, noteFn: function(){ return 'No stablecoin buffer detected - adds risk during market drawdowns'; }}
         ]
       },
       {
-        coin: 'Ethereum', sym:'ETH', icon:'\u039e', amt:2.0, total:4200,
-        sources: [
-          {name:'MetaMask', type:'sc', val:'$1,800', perf:'-0.5%', link:'https://metamask.io'},
-          {name:'Ledger', type:'sc', val:'$1,200', perf:'-0.2%', link:'https://ledger.com'},
-          {name:'Kraken', type:'cu', val:'$1,200', perf:'-0.6%', link:'https://kraken.com'}
+        id:'balanced', riskLabel:'Medium Risk', riskClass:'risk-mid',
+        title:'Balanced', sub:'Core-Satellite',
+        desc:'A core of Bitcoin and Ethereum anchors the portfolio at around 50%, with selective satellite exposure to established altcoins for growth. Regular rebalancing maintains the ratio. The most widely recommended framework for long-term crypto investors.',
+        targets:[
+          {asset:'BTC + ETH Core', target:'45-55%', combined:true, sigFn: function(p){ return p>=45&&p<=55?'good':'warn'; }, noteFn: function(p){ return p>55?'Core is slightly heavy - some diversification would help':'Consider building core toward 50%'; }},
+          {asset:'Solana (SOL)', target:'20-30%', sigFn: function(p){ return p>=20&&p<=30?'good':'warn'; }, noteFn: function(p){ return p>=20&&p<=30?'Good satellite position':'Fine-tune SOL toward a 25% target'; }},
+          {asset:'Other Altcoins', target:'15-25%', pct:0, sigFn: function(){ return 'warn'; }, noteFn: function(){ return 'Adding 1-2 established altcoins would improve diversification'; }},
+          {asset:'Stablecoins', target:'5-10%', pct:0, sigFn: function(){ return 'warn'; }, noteFn: function(){ return 'A small stablecoin reserve enables opportunistic buys during dips'; }}
         ]
       },
       {
-        coin: 'Solana', sym:'SOL', icon:'S', amt:150, total:19500,
-        sources: [
-          {name:'Phantom', type:'sc', val:'$12,500', perf:'+5.2%', link:'https://phantom.app'},
-          {name:'Coinbase', type:'cu', val:'$7,000', perf:'+4.8%', link:'https://coinbase.com'}
+        id:'aggressive', riskLabel:'High Risk', riskClass:'risk-high',
+        title:'Aggressive', sub:'High Growth',
+        desc:'Maximizes upside potential through higher exposure to altcoins, DeFi protocols, and emerging Layer-1 networks. BTC and ETH remain as a foundation but growth assets dominate. Higher volatility - suited for investors with a long time horizon and strong conviction.',
+        targets:[
+          {asset:'Bitcoin (BTC)', target:'25-35%', sigFn: function(p){ return p>35?'warn':'good'; }, noteFn: function(p){ return p>35?'BTC-heavy - rotating some into growth assets could improve upside':'Good foundation'; }},
+          {asset:'Ethereum (ETH)', target:'15-20%', sigFn: function(p){ return p>=15?'good':'warn'; }, noteFn: function(p){ return p<15?'Increasing ETH gives DeFi and L2 ecosystem exposure':'On target'; }},
+          {asset:'Solana (SOL)', target:'20-30%', sigFn: function(p){ return p>=20&&p<=30?'good':'warn'; }, noteFn: function(p){ return p>=20&&p<=30?'Strong growth position':'SOL is a great fit here - consider sizing toward 25%'; }},
+          {asset:'DeFi and Emerging L1s', target:'25-35%', pct:0, sigFn: function(){ return 'action'; }, noteFn: function(){ return 'Biggest growth gap - DeFi and emerging L1s offer the highest upside in this strategy'; }}
         ]
       }
     ];
 
-    function renderHoldings(showPlus=false){
-      const rows = data.map((h,i) => `
-        <div class="holding-group">
-          <div class="holding-row" onclick="toggle(${i})">
-            <div class="coin-left">
-              <div class="icon">${h.icon}</div>
-              <div><div class="name">${h.coin}</div><div class="amount">${h.amt} ${h.sym}</div></div>
-            </div>
-            <div style="display:flex;align-items:center">
-              <div class="value">$${h.total.toLocaleString()}</div>
-              <span class="chevron" id="chev-${i}">&#x25B8;</span>
-            </div>
-          </div>
-          <div class="sources" id="src-${i}">
-            ${h.sources.map(s => `
-              <div class="source-row">
-                <div class="source-meta">
-                  <span class="name">${s.name}</span>
-                  <span class="badge ${s.type==='sc'?'badge-sc':'badge-cu'}">${s.type==='sc'?'Self-Custody':'Custodial'}</span>
-                  <span class="type-label">${s.type==='sc'?'Wallet':'Exchange'}</span>
-                </div>
-                <div class="source-right">
-                  <span class="perf ${s.perf.includes('+')?'up':'down'}">${s.perf}</span>
-                  <span class="value">${s.val}</span>
-                  <a href="${s.link}" target="_blank" class="visit">Visit</a>
-                </div>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      `).join('');
+    var selectedStrategy = null;
 
-      return `
-        ${showPlus ? `<div class="page-header"><div class="page-title">Crypto Portfolio</div><div class="tool-bar"><button class="btn-icon" title="New Portfolio">+</button></div></div>` : ''}
-        ${showPlus ? `<div class="filter" style="display:flex;gap:8px;margin-bottom:12px;justify-content:flex-end"><span class="filter-chip active">All</span><span class="filter-chip">Wallets</span><span class="filter-chip">Exchanges</span></div>` : ''}
-        <div class="card">${rows}</div>
-      `;
+    function getPct(sym) {
+      for (var i=0; i<data.length; i++) {
+        if (data[i].sym === sym) return Math.round(data[i].total / totalPortfolio * 100);
+      }
+      return 0;
     }
 
-    function setView(view){
-      const main = document.getElementById('main');
-      document.querySelectorAll('.sidebar li').forEach(li => li.classList.remove('active'));
-      const activeLi = document.querySelector(`.sidebar li[onclick*="${view}"]`);
-      if(activeLi) activeLi.classList.add('active');
+    function analyzeStrategy(s) {
+      var btc = getPct('BTC');
+      var eth = getPct('ETH');
+      var sol = getPct('SOL');
+      var results = [];
+      for (var i=0; i<s.targets.length; i++) {
+        var t = s.targets[i];
+        var pct;
+        if (t.pct !== undefined) { pct = t.pct; }
+        else if (t.combined) { pct = btc + eth; }
+        else if (t.asset.indexOf('Bitcoin') !== -1) { pct = btc; }
+        else if (t.asset.indexOf('Ethereum') !== -1) { pct = eth; }
+        else if (t.asset.indexOf('Solana') !== -1) { pct = sol; }
+        else { pct = 0; }
+        results.push({ asset:t.asset, current:pct+'%', target:t.target, signal:t.sigFn(pct), note:t.noteFn(pct) });
+      }
+      return results;
+    }
 
-      if(view === 'summary'){
-        main.innerHTML = `
-          <div class="hero">
-            <div class="hero-label">Total Balance</div>
-            <div class="hero-total">$59,550.00</div>
-            <div class="hero-updated">Last updated: Just now <span style="font-size:10px;border:1px solid #ccc;border-radius:4px;padding:1px 4px;margin-left:4px">CT</span></div>
-          </div>
-          ${renderHoldings(false)}
-        `;
-      } else if(view === 'portfolio'){
+    function renderStrategyCards() {
+      var html = '';
+      for (var i=0; i<strategies.length; i++) {
+        var s = strategies[i];
+        var sel = selectedStrategy === s.id ? ' selected' : '';
+        html += '<div class="strategy-card' + sel + '" onclick="selectStrategy(\'' + s.id + '\')">';
+        html += '<span class="risk-badge ' + s.riskClass + '">' + s.riskLabel + '</span>';
+        html += '<div class="strategy-title">' + s.title + '</div>';
+        html += '<div class="strategy-sub">' + s.sub + '</div>';
+        html += '<div class="strategy-desc">' + s.desc + '</div>';
+        html += '</div>';
+      }
+      return html;
+    }
+
+    function selectStrategy(id) {
+      selectedStrategy = id;
+      var s = null;
+      for (var i=0; i<strategies.length; i++) {
+        if (strategies[i].id === id) { s = strategies[i]; break; }
+      }
+      var analysis = analyzeStrategy(s);
+      var labels = {good:'On Track', warn:'Review', action:'Action Needed'};
+      var classes = {good:'sig-good', warn:'sig-warn', action:'sig-action'};
+      document.getElementById('strategy-cards').innerHTML = renderStrategyCards();
+      var rows = '';
+      for (var i=0; i<analysis.length; i++) {
+        var r = analysis[i];
+        rows += '<div class="opp-row">';
+        rows += '<div><div style="font-weight:600;margin-bottom:3px">' + r.asset + '</div>';
+        rows += '<div style="font-size:12px;color:#888">Current ' + r.current + ' &rarr; Target ' + r.target + '</div>';
+        rows += '<div style="font-size:12px;color:#666;margin-top:2px">' + r.note + '</div></div>';
+        rows += '<span class="signal ' + classes[r.signal] + '">' + labels[r.signal] + '</span>';
+        rows += '</div>';
+      }
+      document.getElementById('strategy-detail').innerHTML =
+        '<div class="opp-section">' +
+        '<div class="opp-title">Your Portfolio vs ' + s.title + '</div>' +
+        '<div class="opp-sub">Based on your current holdings - ' + s.sub + ' strategy targets</div>' +
+        rows + '</div>';
+    }
+
+    function renderHoldings(showPlus) {
+      var rows = '';
+      for (var i=0; i<data.length; i++) {
+        var h = data[i];
+        var srcs = '';
+        for (var j=0; j<h.sources.length; j++) {
+          var s = h.sources[j];
+          var bclass = s.type==='sc' ? 'badge-sc' : 'badge-cu';
+          var blabel = s.type==='sc' ? 'Self-Custody' : 'Custodial';
+          var tlabel = s.type==='sc' ? 'Wallet' : 'Exchange';
+          var pclass = s.perf.indexOf('+') !== -1 ? 'up' : 'down';
+          srcs += '<div class="source-row">';
+          srcs += '<div class="source-meta"><span class="name">' + s.name + '</span>';
+          srcs += '<span class="badge ' + bclass + '">' + blabel + '</span>';
+          srcs += '<span class="type-label">' + tlabel + '</span></div>';
+          srcs += '<div class="source-right">';
+          srcs += '<span class="perf ' + pclass + '">' + s.perf + '</span>';
+          srcs += '<span class="value">' + s.val + '</span>';
+          srcs += '<a href="' + s.link + '" target="_blank" class="visit">Visit</a></div></div>';
+        }
+        rows += '<div class="holding-group">';
+        rows += '<div class="holding-row" onclick="toggle(' + i + ')">';
+        rows += '<div class="coin-left"><div class="icon">' + h.icon + '</div>';
+        rows += '<div><div class="name">' + h.coin + '</div><div class="amount">' + h.amt + ' ' + h.sym + '</div></div></div>';
+        rows += '<div style="display:flex;align-items:center">';
+        rows += '<div class="value">$' + h.total.toLocaleString() + '</div>';
+        rows += '<span class="chevron" id="chev-' + i + '">&#x25B8;</span></div></div>';
+        rows += '<div class="sources" id="src-' + i + '">' + srcs + '</div></div>';
+      }
+      var header = showPlus ? '<div class="page-header"><div class="page-title">Crypto Portfolio</div><div class="tool-bar"><button class="btn-icon" title="New">+</button></div></div>' : '';
+      var filters = showPlus ? '<div class="filter" style="display:flex;gap:8px;margin-bottom:12px;justify-content:flex-end"><span class="filter-chip active">All</span><span class="filter-chip">Wallets</span><span class="filter-chip">Exchanges</span></div>' : '';
+      return header + filters + '<div class="card">' + rows + '</div>';
+    }
+
+    function setView(view) {
+      var main = document.getElementById('main');
+      var lis = document.querySelectorAll('.sidebar li');
+      for (var i=0; i<lis.length; i++) { lis[i].classList.remove('active'); }
+      var activeLi = document.querySelector('.sidebar li[onclick*="' + view + '"]');
+      if (activeLi) activeLi.classList.add('active');
+      if (view === 'summary') {
+        main.innerHTML = '<div class="hero"><div class="hero-label">Total Balance</div><div class="hero-total">$59,550.00</div><div class="hero-updated">Last updated: Just now <span style="font-size:10px;border:1px solid #ccc;border-radius:4px;padding:1px 4px;margin-left:4px">CT</span></div></div>' + renderHoldings(false);
+      } else if (view === 'portfolio') {
         main.innerHTML = renderHoldings(true);
+      } else if (view === 'strategies') {
+        selectedStrategy = null;
+        main.innerHTML = '<div class="page-header"><div class="page-title">Strategies</div></div><p style="font-size:13px;color:#888;margin-top:0;margin-bottom:20px">Choose a strategy to see how your portfolio aligns and where the opportunities are.</p><div id="strategy-cards" style="display:flex;flex-direction:column;gap:12px">' + renderStrategyCards() + '</div><div id="strategy-detail" style="margin-top:20px"></div>';
       } else {
-        main.innerHTML = `<div style="text-align:center;padding:40px;color:#999;font-size:14px">Placeholder for ${view}</div>`;
+        main.innerHTML = '<div style="text-align:center;padding:40px;color:#999;font-size:14px">Coming soon</div>';
       }
     }
 
-    function toggle(i){
-      document.getElementById(`src-${i}`).classList.toggle('open');
-      document.getElementById(`chev-${i}`).classList.toggle('open');
+    function toggle(i) {
+      document.getElementById('src-'+i).classList.toggle('open');
+      document.getElementById('chev-'+i).classList.toggle('open');
     }
-    function togglePanel(){
+    function togglePanel() {
       document.getElementById('settingsPanel').classList.toggle('active');
     }
-
-    // Init
     setView('summary');
   </script>
 </body>
