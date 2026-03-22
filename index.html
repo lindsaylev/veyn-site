@@ -8,6 +8,7 @@
   <style>
     :root{ --bg:#F2EDE6; --accent:#4A5E4A; --tan:#8B7355; --card:#EDE8DF; --tan2:#B5A08A; --brown:#6B5744; --text:#1A1A1A; }
     *{box-sizing:border-box} body{margin:0;font-family:Plus Jakarta Sans,system-ui;background:var(--bg);color:var(--text)}
+    /* Layout */
     .top-header{padding:14px 20px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:40}
     .brand{font-family:Playfair Display,serif;font-size:26px;color:var(--accent);letter-spacing:1px}
     .header-actions{display:flex;gap:8px;align-items:center}
@@ -21,6 +22,7 @@
     .sidebar li:hover{background:#f5f0ea}
     .sidebar li.active{background:var(--accent);color:#fff;font-weight:600}
     .content{flex:1;padding:24px;max-width:900px}
+    /* Components */
     .hero{text-align:center;padding:12px 0 24px}
     .hero-label{font-size:12px;color:var(--tan);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
     .hero-total{font-family:Playfair Display,serif;font-size:48px;line-height:1.1}
@@ -32,6 +34,7 @@
     .btn-icon{width:32px;height:32px;border-radius:6px;background:var(--accent);color:#fff;border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
     .filter-chip{padding:6px 12px;font-size:12px;border:1px solid #ddd;border-radius:99px;cursor:pointer;background:#fff}
     .filter-chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+    /* Holdings */
     .holding-row{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid #f0ece6;cursor:pointer;transition:background .15s}
     .holding-row:hover{background:#faf8f4}
     .coin-left{display:flex;align-items:center;gap:12px}
@@ -41,6 +44,7 @@
     .value{font-weight:600;text-align:right}
     .chevron{font-size:11px;color:#bbb;margin-left:8px;transition:transform .2s}
     .chevron.open{transform:rotate(90deg)}
+    /* Sources */
     .sources{display:none;background:#faf8f4;padding:6px 18px 12px 66px}
     .sources.open{display:block}
     .source-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0ece6;font-size:13px}
@@ -55,30 +59,13 @@
     .perf.up{color:#2a9d8f} .perf.down{color:#e76f51}
     .visit{font-size:10px;color:var(--accent);text-decoration:none;border:1px solid var(--accent);padding:2px 6px;border-radius:4px}
     .visit:hover{background:var(--accent);color:#fff}
+    /* Settings panel */
     .panel{position:fixed;right:20px;top:56px;width:240px;background:#fff;border:1px solid #ddd;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.12);padding:8px;display:none;z-index:50}
     .panel.active{display:block}
     .row{padding:8px 10px;font-size:13px;cursor:pointer;border-bottom:1px solid #f5f0ea}
     .row:last-child{border-bottom:0}
     .row:hover{background:#f5f0ea}
-    .strategy-card{background:#fff;border-radius:16px;padding:20px 24px;cursor:pointer;border:2px solid transparent;transition:all .2s;box-shadow:0 4px 16px rgba(107,87,68,.06)}
-    .strategy-card:hover{border-color:var(--accent)}
-    .strategy-card.selected{border-color:var(--accent);background:#f7f9f7}
-    .risk-badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
-    .risk-low{background:#e8f0e8;color:#4A5E4A}
-    .risk-mid{background:#f0ece0;color:#8B7355}
-    .risk-high{background:#f5e8e0;color:#9B4E2F}
-    .strategy-title{font-family:Playfair Display,serif;font-size:20px;margin:0 0 4px}
-    .strategy-sub{font-size:12px;color:var(--tan);margin-bottom:10px;font-weight:500}
-    .strategy-desc{font-size:13px;color:#666;line-height:1.6}
-    .opportunity-section{background:#fff;border-radius:16px;padding:20px 24px;box-shadow:0 4px 16px rgba(107,87,68,.06)}
-    .opportunity-title{font-family:Playfair Display,serif;font-size:20px;margin-bottom:4px}
-    .opportunity-sub{font-size:13px;color:#888;margin-bottom:16px}
-    .opportunity-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #f0ece6;font-size:13px}
-    .opportunity-row:last-child{border-bottom:none}
-    .signal{font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;white-space:nowrap}
-    .signal-good{background:#e8f5e9;color:#2e7d32}
-    .signal-warn{background:#fff3e0;color:#e65100}
-    .signal-action{background:#fce4ec;color:#c62828}
+    /* Responsive */
     @media(max-width:700px){.layout{flex-direction:column}.sidebar{width:auto;border-right:0;border-bottom:1px solid #eee;padding:8px 16px}.sidebar ul{display:flex;gap:8px;overflow-x:auto}.sidebar li{white-space:nowrap;margin:0}}
   </style>
 </head>
@@ -90,6 +77,7 @@
       <div class="avatar"></div>
     </div>
   </div>
+
   <div class="layout">
     <aside class="sidebar">
       <h3>Navigate</h3>
@@ -102,192 +90,43 @@
     </aside>
     <main class="content" id="main"></main>
   </div>
+
   <div class="panel" id="settingsPanel">
     <div class="row">View Profile</div>
     <div class="row">Theme: Light</div>
     <div class="row">CT Badge: On</div>
     <div class="row">Help</div>
   </div>
+
   <script>
     const data = [
-      { coin:"Bitcoin", sym:"BTC", icon:"\u20bf", amt:0.5, total:35850, sources:[{name:"MetaMask",type:"sc",val:"$12,400",perf:"+2.4%",link:"https://metamask.io"},{name:"Phantom",type:"sc",val:"$8,200",perf:"+1.1%",link:"https://phantom.app"},{name:"Coinbase",type:"cu",val:"$15,250",perf:"+0.8%",link:"https://coinbase.com"}]},
-      { coin:"Ethereum", sym:"ETH", icon:"\u039e", amt:2.0, total:4200, sources:[{name:"MetaMask",type:"sc",val:"$1,800",perf:"-0.5%",link:"https://metamask.io"},{name:"Ledger",type:"sc",val:"$1,200",perf:"-0.2%",link:"https://ledger.com"},{name:"Kraken",type:"cu",val:"$1,200",perf:"-0.6%",link:"https://kraken.com"}]},
-      { coin:"Solana", sym:"SOL", icon:"S", amt:150, total:19500, sources:[{name:"Phantom",type:"sc",val:"$12,500",perf:"+5.2%",link:"https://phantom.app"},{name:"Coinbase",type:"cu",val:"$7,000",perf:"+4.8%",link:"https://coinbase.com"}]}
-    ];
-
-    const totalPortfolio = data.reduce((sum,h) => sum+h.total, 0);
-
-    const strategies = [
       {
-        id:"conservative", riskLabel:"Low Risk", riskClass:"risk-low", title:"Conservative", sub:"Capital Preservation",
-        desc:"Prioritizes stability and downside protection. Heavy allocation to Bitcoin and Ethereum — the most established, liquid assets in crypto. A stablecoin buffer shields against volatility. Best for investors who want crypto exposure with reduced drawdown risk.",
-        analyze(){
-          const btc=Math.round((data.find(d=>d.sym==="BTC")?.total||0)/totalPortfolio*100);
-          const eth=Math.round((data.find(d=>d.sym==="ETH")?.total||0)/totalPortfolio*100);
-          const sol=Math.round((data.find(d=>d.sym==="SOL")?.total||0)/totalPortfolio*100);
-          return [
-            {asset:"Bitcoin (BTC)",current:btc+"%",target:"55-65%",signal:btc>=55&&btc<=65?"good":"warn",note:btc>=55&&btc<=65?"Well positioned as your core holding":"Adjust toward a 60% target"},
-            {asset:"Ethereum (ETH)",current:eth+"%",target:"15-25%",signal:eth>=15&&eth<=25?"good":"warn",note:eth<15?"Underweight — increasing ETH strengthens your stable base":"On target"},
-            {asset:"Solana (SOL)",current:sol+"%",target:"Under 10%",signal:sol>10?"action":"good",note:sol>10?"Overweight for this strategy — consider trimming for lower volatility":"On target"},
-            {asset:"Stablecoins",current:"0%",target:"10-20%",signal:"action",note:"No stablecoin buffer detected — adds risk during market drawdowns"}
-          ];
-        }
+        coin: 'Bitcoin', sym:'BTC', icon:'\u20bf', amt:0.5, total:35850,
+        sources: [
+          {name:'MetaMask', type:'sc', val:'$12,400', perf:'+2.4%', link:'https://metamask.io'},
+          {name:'Phantom', type:'sc', val:'$8,200', perf:'+1.1%', link:'https://phantom.app'},
+          {name:'Coinbase', type:'cu', val:'$15,250', perf:'+0.8%', link:'https://coinbase.com'}
+        ]
       },
       {
-        id:"balanced", riskLabel:"Medium Risk", riskClass:"risk-mid", title:"Balanced", sub:"Core-Satellite",
-        desc:"A core of Bitcoin and Ethereum anchors the portfolio (~50%), with selective satellite exposure to established altcoins for growth. Regular rebalancing maintains the ratio. The most widely recommended framework for long-term crypto investors.",
-        analyze(){
-          const btc=Math.round((data.find(d=>d.sym==="BTC")?.total||0)/totalPortfolio*100);
-          const eth=Math.round((data.find(d=>d.sym==="ETH")?.total||0)/totalPortfolio*100);
-          const sol=Math.round((data.find(d=>d.sym==="SOL")?.total||0)/totalPortfolio*100);
-          const core=btc+eth;
-          return [
-            {asset:"BTC + ETH (Core)",current:core+"%",target:"45-55%",signal:core>=45&&core<=55?"good":"warn",note:core>55?"Core is slightly heavy — some diversification would help":"Consider building core holdings toward 50%"},
-            {asset:"Solana (SOL)",current:sol+"%",target:"20-30%",signal:sol>=20&&sol<=30?"good":"warn",note:sol>=20&&sol<=30?"Good satellite position":"Fine-tune SOL toward a 25% target"},
-            {asset:"Other Altcoins",current:"0%",target:"15-25%",signal:"warn",note:"Adding 1-2 established altcoins would improve diversification"},
-            {asset:"Stablecoins",current:"0%",target:"5-10%",signal:"warn",note:"A small stablecoin reserve enables opportunistic buys during dips"}
-          ];
-        }
+        coin: 'Ethereum', sym:'ETH', icon:'\u039e', amt:2.0, total:4200,
+        sources: [
+          {name:'MetaMask', type:'sc', val:'$1,800', perf:'-0.5%', link:'https://metamask.io'},
+          {name:'Ledger', type:'sc', val:'$1,200', perf:'-0.2%', link:'https://ledger.com'},
+          {name:'Kraken', type:'cu', val:'$1,200', perf:'-0.6%', link:'https://kraken.com'}
+        ]
       },
       {
-        id:"aggressive", riskLabel:"High Risk", riskClass:"risk-high", title:"Aggressive", sub:"High Growth",
-        desc:"Maximizes upside potential through higher exposure to altcoins, DeFi protocols, and emerging Layer-1 networks. BTC and ETH remain as a foundation, but growth assets dominate. Higher volatility — suited for investors with a long time horizon and strong conviction.",
-        analyze(){
-          const btc=Math.round((data.find(d=>d.sym==="BTC")?.total||0)/totalPortfolio*100);
-          const eth=Math.round((data.find(d=>d.sym==="ETH")?.total||0)/totalPortfolio*100);
-          const sol=Math.round((data.find(d=>d.sym==="SOL")?.total||0)/totalPortfolio*100);
-          return [
-            {asset:"Bitcoin (BTC)",current:btc+"%",target:"25-35%",signal:btc>35?"warn":"good",note:btc>35?"BTC-heavy for this strategy — rotating some into growth assets could improve upside":"Good foundation"},
-            {asset:"Ethereum (ETH)",current:eth+"%",target:"15-20%",signal:eth>=15?"good":"warn",note:eth<15?"Increasing ETH gives DeFi and L2 ecosystem exposure":"On target"},
-            {asset:"Solana (SOL)",current:sol+"%",target:"20-30%",signal:sol>=20&&sol<=30?"good":"warn",note:sol>=20&&sol<=30?"Strong growth position":"SOL is a good fit here — consider sizing toward 25%"},
-            {asset:"DeFi & Emerging L1s",current:"0%",target:"25-35%",signal:"action",note:"Biggest growth gap — DeFi protocols and emerging L1s offer the highest upside in this strategy"}
-          ];
-        }
+        coin: 'Solana', sym:'SOL', icon:'S', amt:150, total:19500,
+        sources: [
+          {name:'Phantom', type:'sc', val:'$12,500', perf:'+5.2%', link:'https://phantom.app'},
+          {name:'Coinbase', type:'cu', val:'$7,000', perf:'+4.8%', link:'https://coinbase.com'}
+        ]
       }
     ];
-
-    let selectedStrategy = null;
-
-    function renderStrategyCards(){
-      return strategies.map(s => `
-        <div class="strategy-card ${selectedStrategy===s.id?"selected":""}" onclick="selectStrategy('${s.id}')">
-          <span class="risk-badge ${s.riskClass}">${s.riskLabel}</span>
-          <div class="strategy-title">${s.title}</div>
-          <div class="strategy-sub">${s.sub}</div>
-          <div class="strategy-desc">${s.desc}</div>
-        </div>
-      `).join("");
-    }
-
-    function selectStrategy(id){
-      selectedStrategy = id;
-      const s = strategies.find(x=>x.id===id);
-      const analysis = s.analyze();
-      const labels = {good:"On Track",warn:"Review",action:"Action Needed"};
-      const classes = {good:"signal-good",warn:"signal-warn",action:"signal-action"};
-      document.getElementById("strategy-cards").innerHTML = renderStrategyCards();
-      document.getElementById("strategy-detail").innerHTML = `
-        <div class="opportunity-section">
-          <div class="opportunity-title">Your Portfolio vs ${s.title}</div>
-          <div class="opportunity-sub">Based on your current holdings — ${s.sub} strategy targets</div>
-          ${analysis.map(row=>`
-            <div class="opportunity-row">
-              <div>
-                <div style="font-weight:600;margin-bottom:3px">${row.asset}</div>
-                <div style="font-size:12px;color:#888">Current ${row.current} &rarr; Target ${row.target}</div>
-                <div style="font-size:12px;color:#666;margin-top:2px">${row.note}</div>
-              </div>
-              <span class="signal ${classes[row.signal]}">${labels[row.signal]}</span>
-            </div>
-          `).join("")}
-        </div>
-      `;
-    }
-
-
-    const totalPortfolio = data.reduce((sum,h) => sum+h.total, 0);
-    const strategies = [
-      { id:"conservative", riskLabel:"Low Risk", riskClass:"risk-low", title:"Conservative", sub:"Capital Preservation",
-        desc:"Prioritizes stability and downside protection. Heavy allocation to Bitcoin and Ethereum — the most established, liquid assets in crypto. A stablecoin buffer shields against volatility. Best for investors who want crypto exposure with reduced drawdown risk.",
-        analyze(){
-          const btc=Math.round((data.find(d=>d.sym==="BTC")?.total||0)/totalPortfolio*100);
-          const eth=Math.round((data.find(d=>d.sym==="ETH")?.total||0)/totalPortfolio*100);
-          const sol=Math.round((data.find(d=>d.sym==="SOL")?.total||0)/totalPortfolio*100);
-          return [
-            {asset:"Bitcoin (BTC)",current:btc+"%",target:"55-65%",signal:btc>=55&&btc<=65?"good":"warn",note:btc>=55&&btc<=65?"Well positioned as your core holding":"Adjust toward a 60% target"},
-            {asset:"Ethereum (ETH)",current:eth+"%",target:"15-25%",signal:eth>=15&&eth<=25?"good":"warn",note:eth<15?"Underweight — increasing ETH strengthens your stable base":"On target"},
-            {asset:"Solana (SOL)",current:sol+"%",target:"Under 10%",signal:sol>10?"action":"good",note:sol>10?"Overweight for this strategy — consider trimming":"On target"},
-            {asset:"Stablecoins",current:"0%",target:"10-20%",signal:"action",note:"No stablecoin buffer detected — adds risk during market drawdowns"}
-          ];
-        }
-      },
-      { id:"balanced", riskLabel:"Medium Risk", riskClass:"risk-mid", title:"Balanced", sub:"Core-Satellite",
-        desc:"A core of Bitcoin and Ethereum anchors the portfolio (~50%), with selective satellite exposure to established altcoins for growth. Regular rebalancing maintains the ratio. The most widely recommended framework for long-term crypto investors.",
-        analyze(){
-          const btc=Math.round((data.find(d=>d.sym==="BTC")?.total||0)/totalPortfolio*100);
-          const eth=Math.round((data.find(d=>d.sym==="ETH")?.total||0)/totalPortfolio*100);
-          const sol=Math.round((data.find(d=>d.sym==="SOL")?.total||0)/totalPortfolio*100);
-          const core=btc+eth;
-          return [
-            {asset:"BTC + ETH (Core)",current:core+"%",target:"45-55%",signal:core>=45&&core<=55?"good":"warn",note:core>55?"Core is slightly heavy — some diversification would help":"Consider building toward 50%"},
-            {asset:"Solana (SOL)",current:sol+"%",target:"20-30%",signal:sol>=20&&sol<=30?"good":"warn",note:sol>=20&&sol<=30?"Good satellite position":"Fine-tune SOL toward a 25% target"},
-            {asset:"Other Altcoins",current:"0%",target:"15-25%",signal:"warn",note:"Adding 1-2 established altcoins would improve diversification"},
-            {asset:"Stablecoins",current:"0%",target:"5-10%",signal:"warn",note:"A small stablecoin reserve enables opportunistic buys during dips"}
-          ];
-        }
-      },
-      { id:"aggressive", riskLabel:"High Risk", riskClass:"risk-high", title:"Aggressive", sub:"High Growth",
-        desc:"Maximizes upside potential through higher exposure to altcoins, DeFi protocols, and emerging Layer-1 networks. BTC and ETH remain as a foundation, but growth assets dominate. Higher volatility — suited for investors with a long time horizon and strong conviction.",
-        analyze(){
-          const btc=Math.round((data.find(d=>d.sym==="BTC")?.total||0)/totalPortfolio*100);
-          const eth=Math.round((data.find(d=>d.sym==="ETH")?.total||0)/totalPortfolio*100);
-          const sol=Math.round((data.find(d=>d.sym==="SOL")?.total||0)/totalPortfolio*100);
-          return [
-            {asset:"Bitcoin (BTC)",current:btc+"%",target:"25-35%",signal:btc>35?"warn":"good",note:btc>35?"BTC-heavy — rotating some into growth assets could improve upside":"Good foundation"},
-            {asset:"Ethereum (ETH)",current:eth+"%",target:"15-20%",signal:eth>=15?"good":"warn",note:eth<15?"Increasing ETH gives DeFi and L2 ecosystem exposure":"On target"},
-            {asset:"Solana (SOL)",current:sol+"%",target:"20-30%",signal:sol>=20&&sol<=30?"good":"warn",note:sol>=20&&sol<=30?"Strong growth position":"SOL is a good fit here — consider sizing toward 25%"},
-            {asset:"DeFi & Emerging L1s",current:"0%",target:"25-35%",signal:"action",note:"Biggest growth gap — DeFi and emerging L1s offer the highest upside in this strategy"}
-          ];
-        }
-      }
-    ];
-    let selectedStrategy = null;
-
-    function renderStrategyCards(){
-      return strategies.map(s => `
-        <div class="strategy-card ${selectedStrategy===s.id?"selected":""}" onclick="selectStrategy('${s.id}')">
-          <span class="risk-badge ${s.riskClass}">${s.riskLabel}</span>
-          <div class="strategy-title">${s.title}</div>
-          <div class="strategy-sub">${s.sub}</div>
-          <div class="strategy-desc">${s.desc}</div>
-        </div>`).join("");
-    }
-
-    function selectStrategy(id){
-      selectedStrategy=id;
-      const s=strategies.find(x=>x.id===id);
-      const analysis=s.analyze();
-      const labels={good:"On Track",warn:"Review",action:"Action Needed"};
-      const classes={good:"signal-good",warn:"signal-warn",action:"signal-action"};
-      document.getElementById("strategy-cards").innerHTML=renderStrategyCards();
-      document.getElementById("strategy-detail").innerHTML=`
-        <div class="opportunity-section">
-          <div class="opportunity-title">Your Portfolio vs ${s.title}</div>
-          <div class="opportunity-sub">Based on your current holdings — ${s.sub} strategy targets</div>
-          ${analysis.map(row=>`
-            <div class="opportunity-row">
-              <div>
-                <div style="font-weight:600;margin-bottom:3px">${row.asset}</div>
-                <div style="font-size:12px;color:#888">Current ${row.current} &rarr; Target ${row.target}</div>
-                <div style="font-size:12px;color:#666;margin-top:2px">${row.note}</div>
-              </div>
-              <span class="signal ${classes[row.signal]}">${labels[row.signal]}</span>
-            </div>`).join("")}
-        </div>`;
-    }
 
     function renderHoldings(showPlus=false){
-      const rows = data.map((h,i)=>`
+      const rows = data.map((h,i) => `
         <div class="holding-group">
           <div class="holding-row" onclick="toggle(${i})">
             <div class="coin-left">
@@ -300,37 +139,39 @@
             </div>
           </div>
           <div class="sources" id="src-${i}">
-            ${h.sources.map(s=>`
+            ${h.sources.map(s => `
               <div class="source-row">
                 <div class="source-meta">
                   <span class="name">${s.name}</span>
-                  <span class="badge ${s.type==="sc"?"badge-sc":"badge-cu"}">${s.type==="sc"?"Self-Custody":"Custodial"}</span>
-                  <span class="type-label">${s.type==="sc"?"Wallet":"Exchange"}</span>
+                  <span class="badge ${s.type==='sc'?'badge-sc':'badge-cu'}">${s.type==='sc'?'Self-Custody':'Custodial'}</span>
+                  <span class="type-label">${s.type==='sc'?'Wallet':'Exchange'}</span>
                 </div>
                 <div class="source-right">
-                  <span class="perf ${s.perf.includes("+")?"up":"down"}">${s.perf}</span>
+                  <span class="perf ${s.perf.includes('+')?'up':'down'}">${s.perf}</span>
                   <span class="value">${s.val}</span>
                   <a href="${s.link}" target="_blank" class="visit">Visit</a>
                 </div>
               </div>
-            `).join("")}
+            `).join('')}
           </div>
         </div>
-      `).join("");
+      `).join('');
+
       return `
-        ${showPlus?`<div class="page-header"><div class="page-title">Crypto Portfolio</div><div class="tool-bar"><button class="btn-icon" title="New Portfolio">+</button></div></div>`:""}
-        ${showPlus?`<div class="filter" style="display:flex;gap:8px;margin-bottom:12px;justify-content:flex-end"><span class="filter-chip active">All</span><span class="filter-chip">Wallets</span><span class="filter-chip">Exchanges</span></div>`:""}
+        ${showPlus ? `<div class="page-header"><div class="page-title">Crypto Portfolio</div><div class="tool-bar"><button class="btn-icon" title="New Portfolio">+</button></div></div>` : ''}
+        ${showPlus ? `<div class="filter" style="display:flex;gap:8px;margin-bottom:12px;justify-content:flex-end"><span class="filter-chip active">All</span><span class="filter-chip">Wallets</span><span class="filter-chip">Exchanges</span></div>` : ''}
         <div class="card">${rows}</div>
       `;
     }
 
     function setView(view){
-      const main = document.getElementById("main");
-      document.querySelectorAll(".sidebar li").forEach(li=>li.classList.remove("active"));
+      const main = document.getElementById('main');
+      document.querySelectorAll('.sidebar li').forEach(li => li.classList.remove('active'));
       const activeLi = document.querySelector(`.sidebar li[onclick*="${view}"]`);
-      if(activeLi) activeLi.classList.add("active");
-      if(view==="summary"){
-        main.innerHTML=`
+      if(activeLi) activeLi.classList.add('active');
+
+      if(view === 'summary'){
+        main.innerHTML = `
           <div class="hero">
             <div class="hero-label">Total Balance</div>
             <div class="hero-total">$59,550.00</div>
@@ -338,29 +179,23 @@
           </div>
           ${renderHoldings(false)}
         `;
-      } else if(view==="portfolio"){
-        main.innerHTML=renderHoldings(true);
-      } else if(view==="strategies"){
-        selectedStrategy=null;
-        main.innerHTML=`
-          <div class="page-header"><div class="page-title">Strategies</div></div>
-          <p style="font-size:13px;color:#888;margin-top:0;margin-bottom:20px">Choose a strategy to see how your portfolio aligns and where the opportunities are.</p>
-          <div id="strategy-cards" style="display:flex;flex-direction:column;gap:12px">${renderStrategyCards()}</div>
-          <div id="strategy-detail" style="margin-top:20px"></div>
-        `;
+      } else if(view === 'portfolio'){
+        main.innerHTML = renderHoldings(true);
       } else {
-        main.innerHTML=`<div style="text-align:center;padding:40px;color:#999;font-size:14px">Placeholder for ${view}</div>`;
+        main.innerHTML = `<div style="text-align:center;padding:40px;color:#999;font-size:14px">Placeholder for ${view}</div>`;
       }
     }
 
     function toggle(i){
-      document.getElementById(`src-${i}`).classList.toggle("open");
-      document.getElementById(`chev-${i}`).classList.toggle("open");
+      document.getElementById(`src-${i}`).classList.toggle('open');
+      document.getElementById(`chev-${i}`).classList.toggle('open');
     }
     function togglePanel(){
-      document.getElementById("settingsPanel").classList.toggle("active");
+      document.getElementById('settingsPanel').classList.toggle('active');
     }
-    setView("summary");
+
+    // Init
+    setView('summary');
   </script>
 </body>
 </html>
