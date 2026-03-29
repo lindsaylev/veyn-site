@@ -28,8 +28,10 @@
     .card{background:#fff;border-radius:16px;box-shadow:0 4px 16px rgba(107,87,68,.06);overflow:hidden;margin-bottom:24px}
     .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
     .page-title{font-family:Playfair Display,serif;font-size:28px}
-    .tool-bar{display:flex;gap:8px}
+    .tool-bar{display:flex;gap:8px;align-items:center}
     .btn-icon{width:32px;height:32px;border-radius:6px;background:var(--accent);color:#fff;border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+    .connect-more-btn{padding:6px 14px;font-size:12px;font-weight:600;border:1px solid var(--accent);border-radius:99px;cursor:pointer;background:#fff;color:var(--accent);font-family:Plus Jakarta Sans,system-ui}
+    .connect-more-btn:hover{background:var(--accent);color:#fff}
     .filter-chip{padding:6px 12px;font-size:12px;border:1px solid #ddd;border-radius:99px;cursor:pointer;background:#fff}
     .filter-chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
     .holding-row{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid #f0ece6;cursor:pointer;transition:background .15s}
@@ -57,9 +59,9 @@
     .visit:hover{background:var(--accent);color:#fff}
     .panel{position:fixed;right:20px;top:56px;width:240px;background:#fff;border:1px solid #ddd;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.12);padding:8px;display:none;z-index:50}
     .panel.active{display:block}
-    .row{padding:8px 10px;font-size:13px;cursor:pointer;border-bottom:1px solid #f5f0ea}
-    .row:last-child{border-bottom:0}
-    .row:hover{background:#f5f0ea}
+    .panel-row{padding:8px 10px;font-size:13px;cursor:pointer;border-bottom:1px solid #f5f0ea}
+    .panel-row:last-child{border-bottom:0}
+    .panel-row:hover{background:#f5f0ea}
     .strategy-card{background:#fff;border-radius:16px;padding:20px 24px;cursor:pointer;border:2px solid transparent;transition:all .2s;box-shadow:0 4px 16px rgba(107,87,68,.06)}
     .strategy-card:hover{border-color:var(--accent)}
     .strategy-card.selected{border-color:var(--accent);background:#f7f9f7}
@@ -79,209 +81,643 @@
     .sig-good{background:#e8f5e9;color:#2e7d32}
     .sig-warn{background:#fff3e0;color:#e65100}
     .sig-action{background:#fce4ec;color:#c62828}
-    @media(max-width:700px){.layout{flex-direction:column}.sidebar{width:auto;border-right:0;border-bottom:1px solid #eee;padding:8px 16px}.sidebar ul{display:flex;gap:8px;overflow-x:auto}.sidebar li{white-space:nowrap;margin:0}}
+    /* Connect screen */
+    .connect-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);padding:24px}
+    .connect-card{background:#fff;border-radius:24px;padding:40px 48px;max-width:520px;width:100%;box-shadow:0 8px 32px rgba(107,87,68,.1)}
+    .connect-brand{font-family:Playfair Display,serif;font-size:36px;color:var(--accent);letter-spacing:1px;text-align:center;margin-bottom:8px}
+    .connect-sub{font-size:14px;color:#888;text-align:center;margin-bottom:28px;line-height:1.5}
+    .connect-label{font-size:12px;font-weight:600;color:var(--tan);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block}
+    .connect-input{width:100%;border:1px solid #ddd;border-radius:10px;padding:12px 14px;font-size:13px;font-family:Plus Jakarta Sans,system-ui;color:var(--text);background:#faf8f4;margin-bottom:0;outline:none}
+    .connect-input:focus{border-color:var(--accent);background:#fff}
+    .connect-input:disabled{background:#f5f5f5;color:#ccc;cursor:not-allowed}
+    .connect-input::placeholder{color:#bbb}
+    .connect-select{width:100%;border:1px solid #ddd;border-radius:10px;padding:12px 14px;font-size:13px;font-family:Plus Jakarta Sans,system-ui;color:var(--text);background:#faf8f4;outline:none;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23888' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+    .connect-select:focus{border-color:var(--accent);background-color:#fff}
+    .add-wallet-box{background:#faf8f4;border-radius:14px;padding:18px;margin-bottom:16px}
+    .add-wallet-row{display:flex;gap:8px;margin-top:10px;align-items:flex-start}
+    .add-wallet-btn{padding:12px 18px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:Plus Jakarta Sans,system-ui;white-space:nowrap;flex-shrink:0}
+    .add-wallet-btn:hover{background:#3d4f3d}
+    .add-wallet-btn:disabled{background:#ccc;cursor:not-allowed}
+    .staked-row{margin-top:10px;display:none}
+    .staked-hint{font-size:11px;color:#aaa;margin-top:6px;line-height:1.5}
+    /* Wallet entry chips */
+    .wallet-list{margin-bottom:16px;display:flex;flex-direction:column;gap:8px;min-height:10px}
+    .wallet-entry{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid #eee;border-radius:12px;padding:12px 14px;gap:12px}
+    .wallet-left{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+    .wallet-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;white-space:nowrap;flex-shrink:0}
+    .wallet-addr{font-size:12px;color:#555;font-family:monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .wallet-staked{font-size:11px;color:#888;white-space:nowrap;flex-shrink:0}
+    .wallet-remove{background:none;border:none;color:#bbb;cursor:pointer;font-size:16px;padding:0 2px;flex-shrink:0;line-height:1}
+    .wallet-remove:hover{color:#e76f51}
+    .wallet-empty{text-align:center;color:#bbb;font-size:13px;padding:14px 0;font-style:italic}
+    /* Connect CTA */
+    .connect-btn{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:Plus Jakarta Sans,system-ui;margin-top:4px}
+    .connect-btn:hover{background:#3d4f3d}
+    .skip-link{display:block;text-align:center;margin-top:14px;font-size:13px;color:#aaa;cursor:pointer;text-decoration:none}
+    .skip-link:hover{color:var(--accent)}
+    .connect-security{font-size:11px;color:#ccc;text-align:center;margin-top:16px}
+    /* Modal */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100;display:none;align-items:center;justify-content:center;padding:24px}
+    .modal-overlay.active{display:flex}
+    .modal{background:#fff;border-radius:20px;padding:32px;max-width:480px;width:100%;box-shadow:0 16px 48px rgba(0,0,0,.15);max-height:90vh;overflow-y:auto}
+    .modal-title{font-family:Playfair Display,serif;font-size:22px;margin-bottom:6px}
+    .modal-sub{font-size:13px;color:#888;margin-bottom:20px}
+    .modal-close{float:right;background:none;border:none;font-size:20px;cursor:pointer;color:#888;margin-top:-4px}
+    .modal-btn{width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:Plus Jakarta Sans,system-ui;margin-top:12px}
+    /* Loading */
+    .loading{text-align:center;padding:60px 24px;color:#888;font-size:14px}
+    .spinner{width:32px;height:32px;border:3px solid #eee;border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @media(max-width:700px){.layout{flex-direction:column}.sidebar{width:auto;border-right:0;border-bottom:1px solid #eee;padding:8px 16px}.sidebar ul{display:flex;gap:8px;overflow-x:auto}.sidebar li{white-space:nowrap;margin:0}.connect-card{padding:28px 20px}}
   </style>
 </head>
 <body>
-  <div class="top-header">
-    <div class="brand">Veyn</div>
-    <div class="header-actions">
-      <button class="settings-btn" onclick="togglePanel()">Settings</button>
-      <div class="avatar"></div>
+
+  <!-- Main app (hidden until launched) -->
+  <div id="app" style="display:none">
+    <div class="top-header">
+      <div class="brand">Veyn</div>
+      <div class="header-actions">
+        <button class="settings-btn" onclick="togglePanel()">Settings</button>
+        <div class="avatar"></div>
+      </div>
+    </div>
+    <div class="layout">
+      <aside class="sidebar">
+        <h3>Navigate</h3>
+        <ul id="nav">
+          <li class="active" onclick="setView('summary')">Summary</li>
+          <li onclick="setView('portfolio')">Crypto Portfolio</li>
+          <li onclick="setView('strategies')">Strategies</li>
+          <li onclick="setView('performance')">Performance</li>
+        </ul>
+      </aside>
+      <main class="content" id="main"></main>
+    </div>
+    <div class="panel" id="settingsPanel">
+      <div class="panel-row" onclick="openWalletModal()">Manage Wallets</div>
+      <div class="panel-row">Theme: Light</div>
+      <div class="panel-row">CT Badge: On</div>
+      <div class="panel-row" onclick="disconnect()">Disconnect</div>
+      <div class="panel-row">Help</div>
     </div>
   </div>
-  <div class="layout">
-    <aside class="sidebar">
-      <h3>Navigate</h3>
-      <ul id="nav">
-        <li class="active" onclick="setView('summary')">Summary</li>
-        <li onclick="setView('portfolio')">Crypto Portfolio</li>
-        <li onclick="setView('strategies')">Strategies</li>
-        <li onclick="setView('performance')">Performance</li>
-      </ul>
-    </aside>
-    <main class="content" id="main"></main>
+
+  <!-- Connect screen -->
+  <div id="connectScreen">
+    <div class="connect-screen">
+      <div class="connect-card">
+        <div class="connect-brand">Veyn</div>
+        <div class="connect-sub">Add your wallets to track your live crypto portfolio &mdash; or skip ahead and explore first.</div>
+
+        <!-- Added wallets list -->
+        <div id="pendingList" class="wallet-list">
+          <div class="wallet-empty">No wallets added yet</div>
+        </div>
+
+        <!-- Add wallet form -->
+        <div class="add-wallet-box">
+          <label class="connect-label">Add a wallet</label>
+          <select class="connect-select" id="netSelect" onchange="onNetworkChange('net','addr','stakedRow')">
+            <option value="">Choose a network...</option>
+            <option value="sol">Solana (SOL)</option>
+            <option value="eth">Ethereum (ETH)</option>
+            <option value="btc">Bitcoin (BTC)</option>
+            <option value="base">Base Network</option>
+            <option value="bnb">BNB Chain (BNB)</option>
+            <option value="xrp">XRP Ledger (XRP)</option>
+            <option value="ada">Cardano (ADA)</option>
+            <option value="avax">Avalanche (AVAX)</option>
+            <option value="matic">Polygon (POL)</option>
+            <option value="doge">Dogecoin (DOGE)</option>
+            <option value="dot">Polkadot (DOT)</option>
+            <option value="ltc">Litecoin (LTC)</option>
+            <option value="trx">Tron (TRX)</option>
+            <option value="shib">Shiba Inu (SHIB)</option>
+            <option value="bch">Bitcoin Cash (BCH)</option>
+            <option value="xlm">Stellar (XLM)</option>
+            <option value="near">NEAR Protocol</option>
+            <option value="arb">Arbitrum (ARB)</option>
+            <option value="op">Optimism (OP)</option>
+            <option value="sui">Sui (SUI)</option>
+          </select>
+          <div class="add-wallet-row">
+            <input class="connect-input" id="addrInput" type="text" placeholder="Select a network first" disabled />
+            <button class="add-wallet-btn" onclick="addWalletEntry('netSelect','addrInput','stakedInput','pendingList',false)" id="addBtn" disabled>Add</button>
+          </div>
+          <div class="staked-row" id="stakedRow">
+            <input class="connect-input" id="stakedInput" type="number" min="0" step="0.01" placeholder="Staked SOL amount (optional)" />
+            <div class="staked-hint">Find your staked amount in Phantom under the Staking tab.</div>
+          </div>
+        </div>
+
+        <button class="connect-btn" onclick="handleConnect()">Connect Portfolio</button>
+        <a class="skip-link" onclick="skipConnect()">Skip this step &rarr;</a>
+        <div class="connect-security">Read-only access. We never ask for private keys or seed phrases.</div>
+      </div>
+    </div>
   </div>
-  <div class="panel" id="settingsPanel">
-    <div class="row">View Profile</div>
-    <div class="row">Theme: Light</div>
-    <div class="row">CT Badge: On</div>
-    <div class="row">Help</div>
+
+  <!-- Wallet modal -->
+  <div class="modal-overlay" id="walletModal">
+    <div class="modal">
+      <button class="modal-close" onclick="closeWalletModal()">&#x2715;</button>
+      <div class="modal-title">Manage Wallets</div>
+      <div class="modal-sub">Add or remove wallets. Changes apply after saving.</div>
+
+      <div id="modalList" class="wallet-list" style="margin-bottom:16px">
+        <div class="wallet-empty">No wallets connected</div>
+      </div>
+
+      <div class="add-wallet-box">
+        <label class="connect-label">Add another</label>
+        <select class="connect-select" id="mNetSelect" onchange="onNetworkChange('mNetSelect','mAddrInput','mStakedRow')">
+          <option value="">Choose a network...</option>
+          <option value="sol">Solana (SOL)</option>
+          <option value="eth">Ethereum (ETH)</option>
+          <option value="btc">Bitcoin (BTC)</option>
+          <option value="base">Base Network</option>
+          <option value="bnb">BNB Chain (BNB)</option>
+          <option value="xrp">XRP Ledger (XRP)</option>
+          <option value="ada">Cardano (ADA)</option>
+          <option value="avax">Avalanche (AVAX)</option>
+          <option value="matic">Polygon (POL)</option>
+          <option value="doge">Dogecoin (DOGE)</option>
+          <option value="dot">Polkadot (DOT)</option>
+          <option value="ltc">Litecoin (LTC)</option>
+          <option value="trx">Tron (TRX)</option>
+          <option value="shib">Shiba Inu (SHIB)</option>
+          <option value="bch">Bitcoin Cash (BCH)</option>
+          <option value="xlm">Stellar (XLM)</option>
+          <option value="near">NEAR Protocol</option>
+          <option value="arb">Arbitrum (ARB)</option>
+          <option value="op">Optimism (OP)</option>
+          <option value="sui">Sui (SUI)</option>
+        </select>
+        <div class="add-wallet-row">
+          <input class="connect-input" id="mAddrInput" type="text" placeholder="Select a network first" disabled />
+          <button class="add-wallet-btn" onclick="addWalletEntry('mNetSelect','mAddrInput','mStakedInput','modalList',true)" id="mAddBtn" disabled>Add</button>
+        </div>
+        <div class="staked-row" id="mStakedRow">
+          <input class="connect-input" id="mStakedInput" type="number" min="0" step="0.01" placeholder="Staked SOL amount (optional)" />
+          <div class="staked-hint">Find your staked amount in Phantom under the Staking tab.</div>
+        </div>
+      </div>
+
+      <button class="modal-btn" onclick="saveFromModal()">Save and Refresh</button>
+    </div>
   </div>
+
   <script>
-    var data = [
-      { coin:'Bitcoin', sym:'BTC', icon:'\u20bf', amt:0.5, total:35850, sources:[
-        {name:'MetaMask',type:'sc',val:'$12,400',perf:'+2.4%',link:'https://metamask.io'},
-        {name:'Phantom',type:'sc',val:'$8,200',perf:'+1.1%',link:'https://phantom.app'},
-        {name:'Coinbase',type:'cu',val:'$15,250',perf:'+0.8%',link:'https://coinbase.com'}
-      ]},
-      { coin:'Ethereum', sym:'ETH', icon:'\u039e', amt:2.0, total:4200, sources:[
-        {name:'MetaMask',type:'sc',val:'$1,800',perf:'-0.5%',link:'https://metamask.io'},
-        {name:'Ledger',type:'sc',val:'$1,200',perf:'-0.2%',link:'https://ledger.com'},
-        {name:'Kraken',type:'cu',val:'$1,200',perf:'-0.6%',link:'https://kraken.com'}
-      ]},
-      { coin:'Solana', sym:'SOL', icon:'S', amt:150, total:19500, sources:[
-        {name:'Phantom',type:'sc',val:'$12,500',perf:'+5.2%',link:'https://phantom.app'},
-        {name:'Coinbase',type:'cu',val:'$7,000',perf:'+4.8%',link:'https://coinbase.com'}
-      ]}
+    var WALLETS_KEY = 'veyn_wallets';
+    var SOL_RPC = 'https://api.mainnet-beta.solana.com';
+    var BASE_RPC = 'https://mainnet.base.org';
+    var USDC_SOL_MINT = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
+    var USDC_BASE = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913';
+
+    var NETWORKS = [
+      {net:'sol',   label:'Solana',      short:'SOL',  color:'#9945FF', ph:'Your Solana address (e.g. 7xKX...)'},
+      {net:'eth',   label:'Ethereum',    short:'ETH',  color:'#627EEA', ph:'0x... Ethereum address'},
+      {net:'btc',   label:'Bitcoin',     short:'BTC',  color:'#F7931A', ph:'Your Bitcoin address'},
+      {net:'base',  label:'Base',        short:'BASE', color:'#0052FF', ph:'0x... Base network address'},
+      {net:'bnb',   label:'BNB Chain',   short:'BNB',  color:'#F3BA2F', ph:'0x... BNB Chain address'},
+      {net:'xrp',   label:'XRP Ledger',  short:'XRP',  color:'#00AAE4', ph:'Your XRP address'},
+      {net:'ada',   label:'Cardano',     short:'ADA',  color:'#0033AD', ph:'addr1... Cardano address'},
+      {net:'avax',  label:'Avalanche',   short:'AVAX', color:'#E84142', ph:'0x... Avalanche C-Chain address'},
+      {net:'matic', label:'Polygon',     short:'POL',  color:'#8247E5', ph:'0x... Polygon address'},
+      {net:'doge',  label:'Dogecoin',    short:'DOGE', color:'#C2A633', ph:'D... Dogecoin address'},
+      {net:'dot',   label:'Polkadot',    short:'DOT',  color:'#E6007A', ph:'Your Polkadot address'},
+      {net:'ltc',   label:'Litecoin',    short:'LTC',  color:'#A6A9AA', ph:'L... Litecoin address'},
+      {net:'trx',   label:'Tron',        short:'TRX',  color:'#EF0027', ph:'T... Tron address'},
+      {net:'shib',  label:'Shiba Inu',   short:'SHIB', color:'#FFA409', ph:'0x... Ethereum address (holds SHIB)'},
+      {net:'bch',   label:'Bitcoin Cash',short:'BCH',  color:'#8DC351', ph:'bitcoincash:q... address'},
+      {net:'xlm',   label:'Stellar',     short:'XLM',  color:'#7D7CF5', ph:'G... Stellar address'},
+      {net:'near',  label:'NEAR',        short:'NEAR', color:'#00C08B', ph:'yourname.near or 0x...'},
+      {net:'arb',   label:'Arbitrum',    short:'ARB',  color:'#2D374B', ph:'0x... Arbitrum address'},
+      {net:'op',    label:'Optimism',    short:'OP',   color:'#FF0420', ph:'0x... Optimism address'},
+      {net:'sui',   label:'Sui',         short:'SUI',  color:'#6FBCF0', ph:'0x... Sui address'}
     ];
 
-    var totalPortfolio = 0;
-    for (var i=0; i<data.length; i++) { totalPortfolio += data[i].total; }
+    var liveData = [];
+    var lastUpdated = null;
+    var selectedStrategy = null;
+    var pendingWallets = [];
+    var modalWallets = [];
 
+    /* ---- Persistence ---- */
+    function getWallets() {
+      try { return JSON.parse(localStorage.getItem(WALLETS_KEY)) || []; } catch(e) { return []; }
+    }
+    function saveWallets(arr) {
+      localStorage.setItem(WALLETS_KEY, JSON.stringify(arr));
+    }
+
+    /* ---- Migration from old keys ---- */
+    (function migrate() {
+      if (!localStorage.getItem(WALLETS_KEY)) {
+        var oldSol = localStorage.getItem('veyn_sol');
+        var oldEth = localStorage.getItem('veyn_eth');
+        var oldStaked = parseFloat(localStorage.getItem('veyn_staked') || '0');
+        if (oldSol || oldEth) {
+          var m = [];
+          if (oldSol) { var e = {net:'sol', addr:oldSol}; if (oldStaked > 0) e.staked = oldStaked; m.push(e); }
+          if (oldEth) m.push({net:'base', addr:oldEth});
+          saveWallets(m);
+          localStorage.removeItem('veyn_sol');
+          localStorage.removeItem('veyn_eth');
+          localStorage.removeItem('veyn_staked');
+        }
+      }
+    })();
+
+    /* ---- Network helpers ---- */
+    function getNetDef(net) {
+      for (var i = 0; i < NETWORKS.length; i++) { if (NETWORKS[i].net === net) return NETWORKS[i]; }
+      return {net:net, label:net, short:net.toUpperCase(), color:'#888', ph:'Wallet address'};
+    }
+    function truncAddr(addr) {
+      if (!addr || addr.length <= 12) return addr || '';
+      return addr.slice(0, 6) + '...' + addr.slice(-4);
+    }
+
+    /* ---- Connect screen / modal shared UI ---- */
+    function onNetworkChange(selId, addrId, stakedRowId) {
+      var net = document.getElementById(selId).value;
+      var addrEl = document.getElementById(addrId);
+      var stakedEl = document.getElementById(stakedRowId);
+      var addBtnId = selId === 'netSelect' ? 'addBtn' : 'mAddBtn';
+      if (net) {
+        var def = getNetDef(net);
+        addrEl.placeholder = def.ph;
+        addrEl.disabled = false;
+        document.getElementById(addBtnId).disabled = false;
+      } else {
+        addrEl.placeholder = 'Select a network first';
+        addrEl.disabled = true;
+        document.getElementById(addBtnId).disabled = true;
+      }
+      stakedEl.style.display = (net === 'sol') ? 'block' : 'none';
+    }
+
+    function addWalletEntry(selId, addrId, stakedId, listId, isModal) {
+      var net = document.getElementById(selId).value;
+      if (!net) return;
+      var addr = document.getElementById(addrId).value.trim();
+      var entry = {net: net, addr: addr};
+      if (net === 'sol') {
+        var staked = parseFloat(document.getElementById(stakedId).value || '0');
+        if (staked > 0) entry.staked = staked;
+      }
+      if (isModal) {
+        modalWallets.push(entry);
+        renderWalletList(modalWallets, listId, true);
+      } else {
+        pendingWallets.push(entry);
+        renderWalletList(pendingWallets, listId, false);
+      }
+      // reset form
+      document.getElementById(selId).value = '';
+      document.getElementById(addrId).value = '';
+      document.getElementById(addrId).placeholder = 'Select a network first';
+      document.getElementById(addrId).disabled = true;
+      document.getElementById(stakedId).value = '';
+      document.getElementById(stakedRowId || (isModal ? 'mStakedRow' : 'stakedRow')).style.display = 'none';
+      var addBtnId = isModal ? 'mAddBtn' : 'addBtn';
+      document.getElementById(addBtnId).disabled = true;
+    }
+
+    function removeWallet(i, isModal) {
+      if (isModal) {
+        modalWallets.splice(i, 1);
+        renderWalletList(modalWallets, 'modalList', true);
+      } else {
+        pendingWallets.splice(i, 1);
+        renderWalletList(pendingWallets, 'pendingList', false);
+      }
+    }
+
+    function renderWalletList(arr, listId, isModal) {
+      var el = document.getElementById(listId);
+      if (!arr.length) {
+        el.innerHTML = '<div class="wallet-empty">No wallets added yet</div>';
+        return;
+      }
+      var html = '';
+      for (var i = 0; i < arr.length; i++) {
+        var w = arr[i];
+        var def = getNetDef(w.net);
+        var rmFlag = isModal ? 'true' : 'false';
+        html += '<div class="wallet-entry">';
+        html += '<div class="wallet-left">';
+        html += '<span class="wallet-badge" style="background:' + def.color + '22;color:' + def.color + '">' + def.short + '</span>';
+        html += '<span class="wallet-addr">' + (w.addr ? truncAddr(w.addr) : '<span style="color:#bbb;font-family:Plus Jakarta Sans">No address entered</span>') + '</span>';
+        if (w.staked) html += '<span class="wallet-staked">+' + w.staked + ' staked</span>';
+        html += '</div>';
+        html += '<button class="wallet-remove" onclick="removeWallet(' + i + ',' + rmFlag + ')" title="Remove">&#x2715;</button>';
+        html += '</div>';
+      }
+      el.innerHTML = html;
+    }
+
+    /* ---- Connect screen actions ---- */
+    function handleConnect() {
+      saveWallets(pendingWallets);
+      launchApp();
+    }
+    function skipConnect() {
+      launchApp();
+    }
+    function disconnect() {
+      saveWallets([]);
+      document.getElementById('app').style.display = 'none';
+      document.getElementById('connectScreen').style.display = 'block';
+      pendingWallets = [];
+      renderWalletList(pendingWallets, 'pendingList', false);
+      document.getElementById('settingsPanel').classList.remove('active');
+    }
+
+    /* ---- Wallet modal ---- */
+    function openWalletModal() {
+      modalWallets = getWallets().slice(0);
+      renderWalletList(modalWallets, 'modalList', true);
+      document.getElementById('walletModal').classList.add('active');
+      document.getElementById('settingsPanel').classList.remove('active');
+    }
+    function closeWalletModal() {
+      document.getElementById('walletModal').classList.remove('active');
+    }
+    function saveFromModal() {
+      saveWallets(modalWallets);
+      closeWalletModal();
+      loadAndRender();
+    }
+
+    /* ---- Fetch helpers ---- */
+    function fetchSolPrice() {
+      return fetch('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd')
+        .then(function(r){ return r.json(); })
+        .then(function(d){ return d.solana ? d.solana.usd : 150; })
+        .catch(function(){ return 150; });
+    }
+    function fetchSolBalance(addr) {
+      return fetch(SOL_RPC, {method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getBalance',params:[addr]})})
+        .then(function(r){ return r.json(); })
+        .then(function(d){ return d.result ? d.result.value/1e9 : 0; })
+        .catch(function(){ return 0; });
+    }
+    function fetchSolUsdc(addr) {
+      return fetch(SOL_RPC, {method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getTokenAccountsByOwner',
+          params:[addr,{mint:USDC_SOL_MINT},{encoding:'jsonParsed'}]})})
+        .then(function(r){ return r.json(); })
+        .then(function(d){
+          if (!d.result||!d.result.value||!d.result.value.length) return 0;
+          var t = 0;
+          for (var i = 0; i < d.result.value.length; i++) {
+            var u = d.result.value[i].account.data.parsed.info.tokenAmount.uiAmount;
+            t += u || 0;
+          }
+          return t;
+        }).catch(function(){ return 0; });
+    }
+    function fetchBaseUsdc(addr) {
+      var pad = '000000000000000000000000' + addr.slice(2).toLowerCase();
+      var cd = '0x70a08231' + pad;
+      return fetch(BASE_RPC, {method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({jsonrpc:'2.0',id:1,method:'eth_call',params:[{to:USDC_BASE,data:cd},'latest']})})
+        .then(function(r){ return r.json(); })
+        .then(function(d){ if (!d.result||d.result==='0x') return 0; return parseInt(d.result,16)/1e6; })
+        .catch(function(){ return 0; });
+    }
+
+    /* ---- Load and render live data ---- */
+    function loadAndRender() {
+      var main = document.getElementById('main');
+      main.innerHTML = '<div class="loading"><div class="spinner"></div>Fetching your portfolio...</div>';
+      var wallets = getWallets();
+      // find sol and base wallets
+      var solWallet = null, baseWallet = null;
+      for (var i = 0; i < wallets.length; i++) {
+        if (wallets[i].net === 'sol' && !solWallet) solWallet = wallets[i];
+        if ((wallets[i].net === 'base' || wallets[i].net === 'eth') && !baseWallet) baseWallet = wallets[i];
+      }
+      var fetches = [
+        fetchSolPrice(),
+        (solWallet && solWallet.addr) ? fetchSolBalance(solWallet.addr) : Promise.resolve(0),
+        (solWallet && solWallet.addr) ? fetchSolUsdc(solWallet.addr) : Promise.resolve(0),
+        (baseWallet && baseWallet.addr) ? fetchBaseUsdc(baseWallet.addr) : Promise.resolve(0)
+      ];
+      Promise.all(fetches).then(function(res) {
+        var price = res[0];
+        var solBal = res[1];
+        var usdcSol = res[2];
+        var usdcBase = res[3];
+        var staked = (solWallet && solWallet.staked) ? solWallet.staked : 0;
+        liveData = [];
+        var totalSol = solBal + staked;
+        if (totalSol > 0) {
+          var solSrc = [];
+          if (solBal > 0) solSrc.push({name:'Phantom',type:'sc',val:'$'+Math.round(solBal*price).toLocaleString(),perf:'',link:'https://phantom.app'});
+          if (staked > 0) solSrc.push({name:'Phantom (Staked)',type:'sc',val:'$'+Math.round(staked*price).toLocaleString(),perf:'',link:'https://phantom.app'});
+          liveData.push({coin:'Solana',sym:'SOL',icon:'S',amt:Math.round(totalSol*100)/100,total:Math.round(totalSol*price),sources:solSrc});
+        }
+        var totalUsdc = usdcSol + usdcBase;
+        if (totalUsdc > 0) {
+          var uSrc = [];
+          if (usdcSol > 0) uSrc.push({name:'Phantom (Solana)',type:'sc',val:'$'+Math.round(usdcSol).toLocaleString(),perf:'',link:'https://phantom.app'});
+          if (usdcBase > 0) uSrc.push({name:'Base Wallet',type:'sc',val:'$'+Math.round(usdcBase).toLocaleString(),perf:'',link:'https://coinbase.com'});
+          liveData.push({coin:'USDC',sym:'USDC',icon:'$',amt:Math.round(totalUsdc*100)/100,total:Math.round(totalUsdc),sources:uSrc});
+        }
+        // note unsupported wallets
+        for (var j = 0; j < wallets.length; j++) {
+          var w = wallets[j];
+          if (w.net !== 'sol' && w.net !== 'base' && w.net !== 'eth') {
+            var def = getNetDef(w.net);
+            liveData.push({coin:def.label+'('+def.short+')',sym:def.short,icon:def.short.charAt(0),amt:'--',total:0,sources:[{name:'Connected - live balance coming soon',type:'sc',val:'--',perf:'',link:''}],comingSoon:true});
+          }
+        }
+        lastUpdated = new Date();
+        setView('summary');
+      }).catch(function() {
+        main.innerHTML = '<div style="text-align:center;padding:40px;color:#e76f51;font-size:14px">Could not fetch balances. Check your connection and try again.</div>';
+      });
+    }
+
+    function launchApp() {
+      document.getElementById('connectScreen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      loadAndRender();
+    }
+
+    function connectMoreBtn() {
+      return '<button class="connect-more-btn" onclick="openWalletModal()">+ Connect More</button>';
+    }
+
+    /* ---- Portfolio rendering ---- */
+    function renderHoldings(showPlus) {
+      var wallets = getWallets();
+      if (!liveData.length && !wallets.length) {
+        return '<div style="text-align:center;padding:40px;color:#888;font-size:14px">No wallets connected. <span style="color:var(--accent);cursor:pointer;text-decoration:underline" onclick="openWalletModal()">Add a wallet to get started.</span></div>';
+      }
+      if (!liveData.length) {
+        return '<div style="text-align:center;padding:40px;color:#888;font-size:14px">No balances found for your connected wallets. <span style="color:var(--accent);cursor:pointer;text-decoration:underline" onclick="openWalletModal()">Check your addresses.</span></div>';
+      }
+      var rows = '';
+      for (var i = 0; i < liveData.length; i++) {
+        var h = liveData[i];
+        var srcs = '';
+        for (var j = 0; j < h.sources.length; j++) {
+          var s = h.sources[j];
+          var bc = s.type === 'sc' ? 'badge-sc' : 'badge-cu';
+          var bl = s.type === 'sc' ? 'Self-Custody' : 'Custodial';
+          var tl = s.type === 'sc' ? 'Wallet' : 'Exchange';
+          srcs += '<div class="source-row"><div class="source-meta"><span class="name">'+s.name+'</span>';
+          srcs += '<span class="badge '+bc+'">'+bl+'</span>';
+          srcs += '<span class="type-label">'+tl+'</span></div>';
+          srcs += '<div class="source-right">';
+          if (s.perf) srcs += '<span class="perf '+(s.perf.indexOf('+')!==-1?'up':'down')+'">'+s.perf+'</span>';
+          srcs += '<span class="value">'+s.val+'</span>';
+          if (s.link) srcs += '<a href="'+s.link+'" target="_blank" class="visit">Visit</a>';
+          srcs += '</div></div>';
+        }
+        var valDisplay = h.comingSoon ? '<span style="color:#bbb;font-size:12px">--</span>' : '$'+h.total.toLocaleString();
+        rows += '<div class="holding-group">';
+        rows += '<div class="holding-row" onclick="toggle('+i+')">';
+        rows += '<div class="coin-left"><div class="icon">'+h.icon+'</div>';
+        rows += '<div><div class="name">'+h.coin+'</div><div class="amount">'+h.amt+' '+h.sym+'</div></div></div>';
+        rows += '<div style="display:flex;align-items:center">';
+        rows += '<div class="value">'+valDisplay+'</div>';
+        rows += '<span class="chevron" id="chev-'+i+'">&#x25B8;</span></div></div>';
+        rows += '<div class="sources" id="src-'+i+'">'+srcs+'</div></div>';
+      }
+      var hdr = '';
+      var flt = '';
+      if (showPlus) {
+        hdr = '<div class="page-header"><div class="page-title">Crypto Portfolio</div><div class="tool-bar">'+connectMoreBtn()+'<button class="btn-icon" title="Refresh" onclick="loadAndRender()">&#x21bb;</button></div></div>';
+        flt = '<div class="filter" style="display:flex;gap:8px;margin-bottom:12px;justify-content:flex-end"><span class="filter-chip active">All</span><span class="filter-chip">Wallets</span><span class="filter-chip">Exchanges</span></div>';
+      }
+      return hdr+flt+'<div class="card">'+rows+'</div>';
+    }
+
+    /* ---- Strategies ---- */
+    var totalPortfolio = 0;
     var strategies = [
-      {
-        id:'conservative', riskLabel:'Low Risk', riskClass:'risk-low',
-        title:'Conservative', sub:'Capital Preservation',
+      { id:'conservative', riskLabel:'Low Risk', riskClass:'risk-low', title:'Conservative', sub:'Capital Preservation',
         desc:'Prioritizes stability and downside protection. Heavy allocation to Bitcoin and Ethereum, the most established and liquid assets in crypto. A stablecoin buffer shields against volatility. Best for investors who want crypto exposure with reduced drawdown risk.',
         targets:[
-          {asset:'Bitcoin (BTC)', target:'55-65%', sigFn: function(p){ return p>=55&&p<=65?'good':'warn'; }, noteFn: function(p){ return p>=55&&p<=65?'Well positioned as your core holding':'Adjust toward a 60% target'; }},
-          {asset:'Ethereum (ETH)', target:'15-25%', sigFn: function(p){ return p>=15&&p<=25?'good':'warn'; }, noteFn: function(p){ return p<15?'Underweight - increasing ETH strengthens your stable base':'On target'; }},
-          {asset:'Solana (SOL)', target:'Under 10%', sigFn: function(p){ return p>10?'action':'good'; }, noteFn: function(p){ return p>10?'Overweight for this strategy - consider trimming':'On target'; }},
-          {asset:'Stablecoins', target:'10-20%', pct:0, sigFn: function(){ return 'action'; }, noteFn: function(){ return 'No stablecoin buffer detected - adds risk during market drawdowns'; }}
+          {asset:'Bitcoin (BTC)', target:'55-65%', sigFn:function(p){return p>=55&&p<=65?'good':'warn';}, noteFn:function(p){return p>=55&&p<=65?'Well positioned as your core holding':'Adjust toward a 60% target';}},
+          {asset:'Ethereum (ETH)', target:'15-25%', sigFn:function(p){return p>=15&&p<=25?'good':'warn';}, noteFn:function(p){return p<15?'Underweight - increasing ETH strengthens your stable base':'On target';}},
+          {asset:'Solana (SOL)', target:'Under 10%', sigFn:function(p){return p>10?'action':'good';}, noteFn:function(p){return p>10?'Overweight for this strategy - consider trimming':'On target';}},
+          {asset:'Stablecoins (USDC)', target:'10-20%', sigFn:function(p){return p>=10&&p<=20?'good':'warn';}, noteFn:function(p){return p>=10&&p<=20?'Good stablecoin buffer':'Adjust stablecoin allocation toward 15%';}}
         ]
       },
-      {
-        id:'balanced', riskLabel:'Medium Risk', riskClass:'risk-mid',
-        title:'Balanced', sub:'Core-Satellite',
+      { id:'balanced', riskLabel:'Medium Risk', riskClass:'risk-mid', title:'Balanced', sub:'Core-Satellite',
         desc:'A core of Bitcoin and Ethereum anchors the portfolio at around 50%, with selective satellite exposure to established altcoins for growth. Regular rebalancing maintains the ratio. The most widely recommended framework for long-term crypto investors.',
         targets:[
-          {asset:'BTC + ETH Core', target:'45-55%', combined:true, sigFn: function(p){ return p>=45&&p<=55?'good':'warn'; }, noteFn: function(p){ return p>55?'Core is slightly heavy - some diversification would help':'Consider building core toward 50%'; }},
-          {asset:'Solana (SOL)', target:'20-30%', sigFn: function(p){ return p>=20&&p<=30?'good':'warn'; }, noteFn: function(p){ return p>=20&&p<=30?'Good satellite position':'Fine-tune SOL toward a 25% target'; }},
-          {asset:'Other Altcoins', target:'15-25%', pct:0, sigFn: function(){ return 'warn'; }, noteFn: function(){ return 'Adding 1-2 established altcoins would improve diversification'; }},
-          {asset:'Stablecoins', target:'5-10%', pct:0, sigFn: function(){ return 'warn'; }, noteFn: function(){ return 'A small stablecoin reserve enables opportunistic buys during dips'; }}
+          {asset:'BTC + ETH Core', target:'45-55%', combined:true, sigFn:function(p){return p>=45&&p<=55?'good':'warn';}, noteFn:function(p){return p>55?'Core is slightly heavy - some diversification would help':'Consider building core toward 50%';}},
+          {asset:'Solana (SOL)', target:'20-30%', sigFn:function(p){return p>=20&&p<=30?'good':'warn';}, noteFn:function(p){return p>=20&&p<=30?'Good satellite position':'Fine-tune SOL toward a 25% target';}},
+          {asset:'Other Altcoins', target:'15-25%', pct:0, sigFn:function(){return 'warn';}, noteFn:function(){return 'Adding 1-2 established altcoins would improve diversification';}},
+          {asset:'Stablecoins (USDC)', target:'5-10%', sigFn:function(p){return p>=5&&p<=10?'good':'warn';}, noteFn:function(p){return p>=5&&p<=10?'Good reserve':'A small stablecoin reserve enables opportunistic buys';}}
         ]
       },
-      {
-        id:'aggressive', riskLabel:'High Risk', riskClass:'risk-high',
-        title:'Aggressive', sub:'High Growth',
+      { id:'aggressive', riskLabel:'High Risk', riskClass:'risk-high', title:'Aggressive', sub:'High Growth',
         desc:'Maximizes upside potential through higher exposure to altcoins, DeFi protocols, and emerging Layer-1 networks. BTC and ETH remain as a foundation but growth assets dominate. Higher volatility - suited for investors with a long time horizon and strong conviction.',
         targets:[
-          {asset:'Bitcoin (BTC)', target:'25-35%', sigFn: function(p){ return p>35?'warn':'good'; }, noteFn: function(p){ return p>35?'BTC-heavy - rotating some into growth assets could improve upside':'Good foundation'; }},
-          {asset:'Ethereum (ETH)', target:'15-20%', sigFn: function(p){ return p>=15?'good':'warn'; }, noteFn: function(p){ return p<15?'Increasing ETH gives DeFi and L2 ecosystem exposure':'On target'; }},
-          {asset:'Solana (SOL)', target:'20-30%', sigFn: function(p){ return p>=20&&p<=30?'good':'warn'; }, noteFn: function(p){ return p>=20&&p<=30?'Strong growth position':'SOL is a great fit here - consider sizing toward 25%'; }},
-          {asset:'DeFi and Emerging L1s', target:'25-35%', pct:0, sigFn: function(){ return 'action'; }, noteFn: function(){ return 'Biggest growth gap - DeFi and emerging L1s offer the highest upside in this strategy'; }}
+          {asset:'Bitcoin (BTC)', target:'25-35%', sigFn:function(p){return p>35?'warn':'good';}, noteFn:function(p){return p>35?'BTC-heavy - rotating some into growth assets could improve upside':'Good foundation';}},
+          {asset:'Ethereum (ETH)', target:'15-20%', sigFn:function(p){return p>=15?'good':'warn';}, noteFn:function(p){return p<15?'Increasing ETH gives DeFi and L2 ecosystem exposure':'On target';}},
+          {asset:'Solana (SOL)', target:'20-30%', sigFn:function(p){return p>=20&&p<=30?'good':'warn';}, noteFn:function(p){return p>=20&&p<=30?'Strong growth position':'SOL is a great fit here - consider sizing toward 25%';}},
+          {asset:'DeFi and Emerging L1s', target:'25-35%', pct:0, sigFn:function(){return 'action';}, noteFn:function(){return 'Biggest growth gap - DeFi and emerging L1s offer the highest upside in this strategy';}}
         ]
       }
     ];
 
-    var selectedStrategy = null;
-
     function getPct(sym) {
-      for (var i=0; i<data.length; i++) {
-        if (data[i].sym === sym) return Math.round(data[i].total / totalPortfolio * 100);
+      if (!totalPortfolio) return 0;
+      for (var i = 0; i < liveData.length; i++) {
+        if (liveData[i].sym === sym) return Math.round(liveData[i].total/totalPortfolio*100);
       }
       return 0;
     }
-
     function analyzeStrategy(s) {
-      var btc = getPct('BTC');
-      var eth = getPct('ETH');
-      var sol = getPct('SOL');
-      var results = [];
-      for (var i=0; i<s.targets.length; i++) {
+      var btc=getPct('BTC'), eth=getPct('ETH'), sol=getPct('SOL'), usdc=getPct('USDC');
+      var res = [];
+      for (var i = 0; i < s.targets.length; i++) {
         var t = s.targets[i];
         var pct;
-        if (t.pct !== undefined) { pct = t.pct; }
-        else if (t.combined) { pct = btc + eth; }
-        else if (t.asset.indexOf('Bitcoin') !== -1) { pct = btc; }
-        else if (t.asset.indexOf('Ethereum') !== -1) { pct = eth; }
-        else if (t.asset.indexOf('Solana') !== -1) { pct = sol; }
-        else { pct = 0; }
-        results.push({ asset:t.asset, current:pct+'%', target:t.target, signal:t.sigFn(pct), note:t.noteFn(pct) });
+        if (t.pct !== undefined){pct = t.pct;}
+        else if (t.combined){pct = btc+eth;}
+        else if (t.asset.indexOf('Bitcoin') !== -1){pct = btc;}
+        else if (t.asset.indexOf('Ethereum') !== -1){pct = eth;}
+        else if (t.asset.indexOf('Solana') !== -1){pct = sol;}
+        else if (t.asset.indexOf('Stablecoin') !== -1||t.asset.indexOf('USDC') !== -1){pct = usdc;}
+        else{pct = 0;}
+        res.push({asset:t.asset,current:pct+'%',target:t.target,signal:t.sigFn(pct),note:t.noteFn(pct)});
       }
-      return results;
+      return res;
     }
-
     function renderStrategyCards() {
       var html = '';
-      for (var i=0; i<strategies.length; i++) {
+      for (var i = 0; i < strategies.length; i++) {
         var s = strategies[i];
         var sel = selectedStrategy === s.id ? ' selected' : '';
-        html += '<div class="strategy-card' + sel + '" onclick="selectStrategy(\'' + s.id + '\')">';
-        html += '<span class="risk-badge ' + s.riskClass + '">' + s.riskLabel + '</span>';
-        html += '<div class="strategy-title">' + s.title + '</div>';
-        html += '<div class="strategy-sub">' + s.sub + '</div>';
-        html += '<div class="strategy-desc">' + s.desc + '</div>';
+        html += '<div class="strategy-card'+sel+'" onclick="selectStrategy(\''+s.id+'\')">';
+        html += '<span class="risk-badge '+s.riskClass+'">'+s.riskLabel+'</span>';
+        html += '<div class="strategy-title">'+s.title+'</div>';
+        html += '<div class="strategy-sub">'+s.sub+'</div>';
+        html += '<div class="strategy-desc">'+s.desc+'</div>';
         html += '</div>';
       }
       return html;
     }
-
     function selectStrategy(id) {
       selectedStrategy = id;
       var s = null;
-      for (var i=0; i<strategies.length; i++) {
-        if (strategies[i].id === id) { s = strategies[i]; break; }
-      }
+      for (var i = 0; i < strategies.length; i++) { if (strategies[i].id === id) { s = strategies[i]; break; } }
       var analysis = analyzeStrategy(s);
       var labels = {good:'On Track', warn:'Review', action:'Action Needed'};
       var classes = {good:'sig-good', warn:'sig-warn', action:'sig-action'};
       document.getElementById('strategy-cards').innerHTML = renderStrategyCards();
       var rows = '';
-      for (var i=0; i<analysis.length; i++) {
+      for (var i = 0; i < analysis.length; i++) {
         var r = analysis[i];
-        rows += '<div class="opp-row">';
-        rows += '<div><div style="font-weight:600;margin-bottom:3px">' + r.asset + '</div>';
-        rows += '<div style="font-size:12px;color:#888">Current ' + r.current + ' &rarr; Target ' + r.target + '</div>';
-        rows += '<div style="font-size:12px;color:#666;margin-top:2px">' + r.note + '</div></div>';
-        rows += '<span class="signal ' + classes[r.signal] + '">' + labels[r.signal] + '</span>';
-        rows += '</div>';
+        rows += '<div class="opp-row"><div>';
+        rows += '<div style="font-weight:600;margin-bottom:3px">'+r.asset+'</div>';
+        rows += '<div style="font-size:12px;color:#888">Current '+r.current+' &rarr; Target '+r.target+'</div>';
+        rows += '<div style="font-size:12px;color:#666;margin-top:2px">'+r.note+'</div>';
+        rows += '</div><span class="signal '+classes[r.signal]+'">'+labels[r.signal]+'</span></div>';
       }
       document.getElementById('strategy-detail').innerHTML =
-        '<div class="opp-section">' +
-        '<div class="opp-title">Your Portfolio vs ' + s.title + '</div>' +
-        '<div class="opp-sub">Based on your current holdings - ' + s.sub + ' strategy targets</div>' +
-        rows + '</div>';
+        '<div class="opp-section"><div class="opp-title">Your Portfolio vs '+s.title+'</div>'+
+        '<div class="opp-sub">Based on your current holdings - '+s.sub+' strategy targets</div>'+rows+'</div>';
     }
 
-    function renderHoldings(showPlus) {
-      var rows = '';
-      for (var i=0; i<data.length; i++) {
-        var h = data[i];
-        var srcs = '';
-        for (var j=0; j<h.sources.length; j++) {
-          var s = h.sources[j];
-          var bclass = s.type==='sc' ? 'badge-sc' : 'badge-cu';
-          var blabel = s.type==='sc' ? 'Self-Custody' : 'Custodial';
-          var tlabel = s.type==='sc' ? 'Wallet' : 'Exchange';
-          var pclass = s.perf.indexOf('+') !== -1 ? 'up' : 'down';
-          srcs += '<div class="source-row">';
-          srcs += '<div class="source-meta"><span class="name">' + s.name + '</span>';
-          srcs += '<span class="badge ' + bclass + '">' + blabel + '</span>';
-          srcs += '<span class="type-label">' + tlabel + '</span></div>';
-          srcs += '<div class="source-right">';
-          srcs += '<span class="perf ' + pclass + '">' + s.perf + '</span>';
-          srcs += '<span class="value">' + s.val + '</span>';
-          srcs += '<a href="' + s.link + '" target="_blank" class="visit">Visit</a></div></div>';
-        }
-        rows += '<div class="holding-group">';
-        rows += '<div class="holding-row" onclick="toggle(' + i + ')">';
-        rows += '<div class="coin-left"><div class="icon">' + h.icon + '</div>';
-        rows += '<div><div class="name">' + h.coin + '</div><div class="amount">' + h.amt + ' ' + h.sym + '</div></div></div>';
-        rows += '<div style="display:flex;align-items:center">';
-        rows += '<div class="value">$' + h.total.toLocaleString() + '</div>';
-        rows += '<span class="chevron" id="chev-' + i + '">&#x25B8;</span></div></div>';
-        rows += '<div class="sources" id="src-' + i + '">' + srcs + '</div></div>';
-      }
-      var header = showPlus ? '<div class="page-header"><div class="page-title">Crypto Portfolio</div><div class="tool-bar"><button class="btn-icon" title="New">+</button></div></div>' : '';
-      var filters = showPlus ? '<div class="filter" style="display:flex;gap:8px;margin-bottom:12px;justify-content:flex-end"><span class="filter-chip active">All</span><span class="filter-chip">Wallets</span><span class="filter-chip">Exchanges</span></div>' : '';
-      return header + filters + '<div class="card">' + rows + '</div>';
-    }
-
+    /* ---- Views ---- */
     function setView(view) {
+      totalPortfolio = 0;
+      for (var i = 0; i < liveData.length; i++) { totalPortfolio += liveData[i].total; }
       var main = document.getElementById('main');
       var lis = document.querySelectorAll('.sidebar li');
-      for (var i=0; i<lis.length; i++) { lis[i].classList.remove('active'); }
-      var activeLi = document.querySelector('.sidebar li[onclick*="' + view + '"]');
-      if (activeLi) activeLi.classList.add('active');
+      for (var i = 0; i < lis.length; i++) { lis[i].classList.remove('active'); }
+      var al = document.querySelector('.sidebar li[onclick*="\''+view+'\'"]');
+      if (al) al.classList.add('active');
+      var ts = lastUpdated ? lastUpdated.toLocaleTimeString() : 'Just now';
       if (view === 'summary') {
-        main.innerHTML = '<div class="hero"><div class="hero-label">Total Balance</div><div class="hero-total">$59,550.00</div><div class="hero-updated">Last updated: Just now <span style="font-size:10px;border:1px solid #ccc;border-radius:4px;padding:1px 4px;margin-left:4px">CT</span></div></div>' + renderHoldings(false);
+        var tot = totalPortfolio > 0 ? '$'+totalPortfolio.toLocaleString()+'.00' : '--';
+        main.innerHTML = '<div class="hero">'+
+          '<div style="display:flex;justify-content:flex-end;margin-bottom:-20px">'+connectMoreBtn()+'</div>'+
+          '<div class="hero-label">Total Balance</div>'+
+          '<div class="hero-total">'+tot+'</div>'+
+          '<div class="hero-updated">Last updated: '+ts+' <span style="font-size:10px;border:1px solid #ccc;border-radius:4px;padding:1px 4px;margin-left:4px">Live</span></div>'+
+          '</div>'+renderHoldings(false);
       } else if (view === 'portfolio') {
         main.innerHTML = renderHoldings(true);
       } else if (view === 'strategies') {
         selectedStrategy = null;
-        main.innerHTML = '<div class="page-header"><div class="page-title">Strategies</div></div><p style="font-size:13px;color:#888;margin-top:0;margin-bottom:20px">Choose a strategy to see how your portfolio aligns and where the opportunities are.</p><div id="strategy-cards" style="display:flex;flex-direction:column;gap:12px">' + renderStrategyCards() + '</div><div id="strategy-detail" style="margin-top:20px"></div>';
+        main.innerHTML = '<div class="page-header"><div class="page-title">Strategies</div></div>'+
+          '<p style="font-size:13px;color:#888;margin-top:0;margin-bottom:20px">Choose a strategy to see how your portfolio aligns and where the opportunities are.</p>'+
+          '<div id="strategy-cards" style="display:flex;flex-direction:column;gap:12px">'+renderStrategyCards()+'</div>'+
+          '<div id="strategy-detail" style="margin-top:20px"></div>';
       } else {
         main.innerHTML = '<div style="text-align:center;padding:40px;color:#999;font-size:14px">Coming soon</div>';
       }
@@ -294,7 +730,13 @@
     function togglePanel() {
       document.getElementById('settingsPanel').classList.toggle('active');
     }
-    setView('summary');
+
+    /* ---- Init ---- */
+    var saved = getWallets();
+    if (saved.length > 0) {
+      launchApp();
+    }
+    // connect screen starts empty, no pending wallets
   </script>
 </body>
 </html>
